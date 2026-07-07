@@ -1,0 +1,43 @@
+{
+    "bpm":180,
+    "offset":4,
+    "tuning":"Western/72edo",
+    "tonic":0,
+    "chords":[
+        {"beat": 0, "tag":"FM7"},
+        {"beat": 3, "tag":"G"},
+        {"beat": 6, "tag":"Am"},
+        {"beat": 9, "tag":"E"},
+        {"beat": 12, "tag":"F"},
+        {"beat": 15, "tag":"E"},
+        {"beat": 18, "tag":"D7"},
+        {"beat": 21, "tag":"E7"},
+
+        {"beat": 24, "tag":"Am"},
+        {"beat": 27, "tag":"G"},
+        {"beat": 30, "tag":"Am"},
+        {"beat": 33, "tag":"GM7"},
+        {"beat": 36, "tag":"FM7"},
+        {"beat": 39, "tag":"Em7"},
+
+        {"beat": 42, "tag":"FM7"},
+        {"beat": 48, "tag":"Em7"},
+        {"beat": 54, "tag":"FM7"},
+        {"beat": 60, "tag":"Em7"},
+        {"beat": 64, "tag":"E7"},
+
+        {"beat": 66, "tag":"A"},
+        {"beat": 72, "tag":"E"},
+        {"beat": 75, "tag":"E7"},
+        {"beat": 78, "tag":"G"},
+        {"beat": 84, "tag":"Dm9"},
+        {"beat": 90, "tag":"FM7"},
+        {"beat": 93, "tag":"Em7"}
+    ],
+    "events":[
+        {"beat": 33, "type":1, "value":19, "tag":"transpose"},
+        {"beat": 42, "type":1, "value":-23, "tag":"transpose"},
+        {"beat": 54, "type":1, "value":-36, "tag":"transpose"},
+        {"beat": 64, "type":1, "value":-23, "tag":"transpose"}
+    ]
+}

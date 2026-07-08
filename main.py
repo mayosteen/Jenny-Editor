@@ -7,13 +7,13 @@
 import sys, os
 from enum import Enum
 import zipfile
-import json
 from itertools import combinations
 
 import pygame
 from pygame.locals import * # type: ignore
-from apps.config import WIDTH, HEIGHT, FPS, SCALE
+from apps.config import *
 
+import apps.file
 import apps.record
 
 
@@ -407,17 +407,14 @@ def audio():
 
 # region 文件
 
-def open_json(file:str):
-    with open(file, "r", encoding="utf-8") as f:
-        content = json.load(f)
-    return content
 
-chord_map = open_json("./chord_map.json")
+
+chord_map = apps.file.open_json("./chord_map.json")
 
 if len(sys.argv) > 1:
     project = Project(sys.argv[1])
-index = open_json("./recent/index.json")
-chords = open_json(f"./recent/{index['chord']}")
+index = apps.file.open_json("./recent/index.json")
+chords = apps.file.open_json(f"./recent/{index['chord']}")
 song = Song(f"./recent/{index.get('song') or index.get('ogg')}")
 
 # endregion

@@ -34,20 +34,24 @@ Jenny-Editor 是一款基于 Pygame SDL 的沙萨维音乐播放器和编辑器�
 ## Installation / 安装方式
 
 bash
+
 git clone https://github.com/mayosteen/Jenny-Editor.git
+
 cd Jenny-Editor
+
 pip install -r requirements.txt
 
 ---
 
 ## Usage / 使用方法
 
-### English
-
 bash
-python main.py 
+
+python main.py example.jenny(可选)
+
 
 Use the interface to load a Shasavistic music file and start playback or editing.
+
 通过界面加载沙萨维音乐文件，开始播放或编辑。
 
 ---
@@ -59,6 +63,7 @@ Use the interface to load a Shasavistic music file and start playback or editing
 | Space | Play / Pause |
 | F1 | Start recording |
 | F2 | Stop recording |
+
 | 按键 | 功能 |
 |------|------|
 | 空格键 | 播放 / 暂停 |
@@ -71,15 +76,22 @@ Use the interface to load a Shasavistic music file and start playback or editing
 
 
 Jenny-Editor/
-├── apps/           Core apps 核心应用
-├── assets/         Music and resources 音乐和资源
-├── demos/          Demo projects 示例项目
-├── recent/         Recent projects 最近打开的项目
-├── chord_map.json  Chord map 和弦对应关系
-├── main.py         Entry point 程序入口
-├── example.jenny   Example project file
-└── requirements.txt
 
+├── apps/           Core apps 核心应用
+
+├── assets/         Music and resources 音乐和资源
+
+├── demos/          Demo projects 示例项目
+
+├── recent/         Recent projects 最近打开的项目
+
+├── chord_map.json  Chord map 和弦对应关系
+
+├── main.py         Entry point 程序入口
+
+├── example.jenny   Example project file 示例文件
+
+└── requirements.txt
 
 ---
 
@@ -100,9 +112,11 @@ Jenny-Editor/
 ## Contributing / 贡献指南
 
 Contributions are welcome.
+
 Please open an issue before submitting major changes.
 
 欢迎参与贡献。
+
 在提交重大修改前，请先创建 Issue 进行讨论。
 
 ---
@@ -110,6 +124,7 @@ Please open an issue before submitting major changes.
 ## License / 许可证
 
 MIT License
+
 Copyright (c) 2026 mayosteen
 
 ---
@@ -117,8 +132,13 @@ Copyright (c) 2026 mayosteen
 ## Contact / 联系方式
 
 官网: https://xg9.cn/my/mLG2eM
+
 Wechat / 微信: mayosteen
+
 QQ: 2654658859
+
 Email / 邮箱: mayosteen@163.com
+
 Bilibili / B站: MayOS官方
+
 GitHub: https://github.com/mayosteen

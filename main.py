@@ -11,7 +11,10 @@ import pygame
 from pygame.locals import * # type: ignore
 
 from core.config import *
+from core.display import *
+from core.calculate import *
 import core.file
+from core.song import Song
 import apps.record
 
 
@@ -30,50 +33,6 @@ pygame.display.set_caption("Jenny Player")
 # endregion
 
 
-# 声音类
-from core.song import Song
-
-# region Transform类
-
-class Vec2:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-class Scaler:
-    def __init__(self, x, y):
-        self._x = x
-        self._y = y
-        self.resize_update()
-
-    def resize_update(self):
-        global SPRITES
-        for key,value in ORIGINAL_SPRITES.items():
-            origin_width, origin_height = value.get_size()
-            sprite_width = origin_width * self.x // DEFAULT_SCALE
-            sprite_height = origin_height * self.y // DEFAULT_SCALE
-            SPRITES[key] = pygame.transform.smoothscale(value, (sprite_width, sprite_height))
-    
-    @property
-    def x(self):
-        return self._x
-    
-    @x.setter
-    def x(self, value):
-        self._x = value
-        self.resize_update()
-
-    @property
-    def y(self):
-        return self._y
-    
-    @y.setter
-    def y(self, value):
-        self._y = value
-        self.resize_update()
-
-# endregion
-
 # region 渲染类
 
 class GameSprite:
@@ -83,11 +42,11 @@ class GameSprite:
         self.image_index = image_index
         self.x, self.y = position
         
-    def draw(self, region:Vec2):
+    def draw(self):
         image = SPRITES[self.image_index]
         rect = image.get_rect()
-        rect.x = (self.x + region.x - cam.x) * scale.x + WIDTH/2
-        rect.centery = - (self.y + region.y - cam.y) * scale.y + HEIGHT/2
+        rect.x = (self.x - cam.x) * scale.x + WIDTH/2
+        rect.centery = - (self.y - cam.y) * scale.y + HEIGHT/2
         self.window.blit(image, rect)
 
 class PlayHead:
@@ -101,8 +60,8 @@ class PlayHead:
         self.window.blit(self.image, rect)
 
 class Column:
-    def __init__(self, screen, index, chord):
-        self.screen = screen
+    def __init__(self, window, index, chord):
+        self.window = window
         self.index = index
         _beat = chord["beat"]
         tag = chord["tag"]
@@ -111,12 +70,14 @@ class Column:
         self.lines = chord_map[tag]
         self.sprites = []
 
+        self.surface = pygame.Surface((80, max(self.lines)- min(self.lines)), flags=SRCALPHA)
+
         for i in range(-20, 20):
-            self.sprites.append(GameSprite(self.screen, "g2", (0, INTERVALS[2]*i)))
-            self.sprites.append(GameSprite(self.screen, "g3", (0, INTERVALS[2]*i+INTERVALS[3])))
+            self.sprites.append(GameSprite(self.window, "g2", (0, INTERVALS[2]*i)))
+            self.sprites.append(GameSprite(self.window, "g3", (0, INTERVALS[2]*i+INTERVALS[3])))
 
         for line in self.lines:
-            self.sprites.append(GameSprite(self.screen, 0, (0, line)))
+            self.sprites.append(GameSprite(self.window, 0, (0, line)))
 
         for bar in combinations(self.lines, 2):
             interval = abs(bar[0]-bar[1])
@@ -124,11 +85,11 @@ class Column:
             if interval in INTERVALS:
                 dimen_index = INTERVALS.index(interval)
 
-                self.sprites.append(GameSprite(self.screen, dimen_index, (0, y)))
+                self.sprites.append(GameSprite(self.window, dimen_index, (0, y)))
 
     def draw(self):
         for sprite in self.sprites:
-            sprite.draw(self.region)
+            sprite.draw()
 
     def draw_mask(self):
         mask = pygame.Surface(
@@ -136,7 +97,7 @@ class Column:
             SRCALPHA
             )
         mask.fill((255, 255, 255, 34))
-        self.screen.blit(mask, (
+        self.window.blit(mask, (
             (self.region.x - cam.x) * scale.x + WIDTH/2,
             -(self.region.y + max(self.lines) + 20 - cam.y) * scale.y + HEIGHT/2
         ))
@@ -223,15 +184,6 @@ def update():
                 cam.y += 72
             elif event.key == K_s:
                 cam.y -= 72
-                
-            elif event.key == K_h:
-                scale.x += 0.5
-            elif event.key == K_f:
-                scale.x -= 0.5
-            elif event.key == K_t:
-                scale.y += 0.5
-            elif event.key == K_g:
-                scale.y -= 0.5
 
             elif event.key == K_SPACE:
                 song.play_or_pause()
@@ -293,8 +245,7 @@ def onChangeColumn(column):
 
 
 def onChangeBeat(beat):
-    # print(f"beat:{beat}")
-    pass
+    print(f"beat:{beat}")
 
 def audio():
     global s, beat, last_column_index, last_beat
@@ -323,7 +274,7 @@ def audio():
 
 
 
-chord_map = core.file.open_json(".\\chord_map.json")
+chord_map = core.file.open_json("..\\chord_map.json")
 
 if len(sys.argv) > 1:
     project = core.file.Project(sys.argv[1])
@@ -333,32 +284,6 @@ song = Song(song_path)
 # endregion
 
 # region 显示
-
-COLORS = {
-    "bg":(81, 78, 97)
-}
-
-ORIGINAL_SPRITES = {
-    0:pygame.image.load("./assets/sprites/0.png"),
-    1:pygame.image.load("./assets/sprites/1.png"),
-    2:pygame.image.load("./assets/sprites/2.png"),
-    3:pygame.image.load("./assets/sprites/3.png"),
-    4:pygame.image.load("./assets/sprites/4.png"),
-    5:pygame.image.load("./assets/sprites/5.png"),
-    "g1":pygame.image.load("./assets/sprites/g1.png"),
-    "g2":pygame.image.load("./assets/sprites/g2.png"),
-    "g3":pygame.image.load("./assets/sprites/g3.png"),
-    "g4":pygame.image.load("./assets/sprites/g4.png"),
-    "g5":pygame.image.load("./assets/sprites/g5.png"),
-}
-
-SPRITES = ORIGINAL_SPRITES.copy()
-
-cam = Vec2(0.0, 0.0)
-
-DEFAULT_SCALE = 20.0
-scale = Scaler(SCALE, SCALE)
-
 columns = []
 
 def sprite_update():

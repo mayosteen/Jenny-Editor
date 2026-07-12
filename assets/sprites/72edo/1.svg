@@ -3,15 +3,15 @@
 
 <svg
    width="80"
-   height="34"
-   viewBox="0 0 80 34"
+   height="83"
+   viewBox="0 0 80 83"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="3.svg"
-   inkscape:export-filename="3.png"
-   inkscape:export-xdpi="1920"
-   inkscape:export-ydpi="1920"
+   sodipodi:docname="1.svg"
+   inkscape:export-filename="1.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#666666"
      inkscape:document-units="px"
-     inkscape:zoom="8.3740179"
-     inkscape:cx="30.869292"
-     inkscape:cy="42.333322"
+     inkscape:zoom="10.45"
+     inkscape:cx="39.952153"
+     inkscape:cy="36.889952"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
@@ -75,11 +75,11 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#6cd985;fill-opacity:1;stroke-width:0.557194"
+       style="fill:#a9a9a9;fill-opacity:1;stroke-width:0.971766"
        id="rect1"
        width="5"
-       height="24"
-       x="55"
+       height="73"
+       x="37.5"
        y="5" />
   </g>
 </svg>

@@ -3,15 +3,15 @@
 
 <svg
    width="80"
-   height="116"
-   viewBox="0 0 80 116"
+   height="69"
+   viewBox="0 0 80 69"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="5.svg"
-   inkscape:export-filename="5.png"
-   inkscape:export-xdpi="1920"
-   inkscape:export-ydpi="1920"
+   sodipodi:docname="4.svg"
+   inkscape:export-filename="4.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,8 +27,8 @@
      inkscape:deskcolor="#666666"
      inkscape:document-units="px"
      inkscape:zoom="8.3740178"
-     inkscape:cx="-12.359658"
-     inkscape:cy="58.812868"
+     inkscape:cx="-23.82369"
+     inkscape:cy="6.030558"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
@@ -77,25 +77,17 @@
          transform="translate(-1259.6973,-717.00002)"
          id="path129" />
     </clipPath>
-    <clipPath
-       clipPathUnits="userSpaceOnUse"
-       id="clipPath119">
-      <path
-         d="M 0,1440 H 2900 V 0 H 0 Z"
-         transform="translate(-1654,-717.00002)"
-         id="path119" />
-    </clipPath>
   </defs>
   <g
      inkscape:label="图层 1"
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       id="path118"
-       d="M -4.3750008,0 H 17 l -1e-6,3.7641509 L -132.625,399 H -154 v -3.76415 z"
-       style="fill:#ffc247;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       transform="matrix(0.23391813,0,0,-0.26566416,56.023392,111)"
-       clip-path="url(#clipPath119)"
+       id="path128"
+       d="M 2.963125,0 H -18.796 V 3.7794238 L 133.51788,222.986 H 155.277 v -3.77942 z"
+       style="fill:#b598ee;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(0.22978865,0,0,-0.2645906,24.319107,64)"
+       clip-path="url(#clipPath129)"
        sodipodi:nodetypes="ccccccc" />
   </g>
 </svg>

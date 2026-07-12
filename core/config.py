@@ -1,26 +1,65 @@
 from enum import Enum
+import pygame
+
+# region 窗口
 
 WIDTH = 1920
 HEIGHT = 1080
-
 FPS = 60
 
-SCALE = 2.0
-
-RECENT_PROJECT_PATH = "Jenny-Editor"
-
+# 文件
+RECENT_PROJECT_PATH = "Jenny-Editor\\recent"
 
 
-INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
 
+
+# 状态
 class States(Enum):
-    QUIT = "states.quit"
-    PLAY = "states.play"
-    PAUSE = "states.pause"
-    EDIT = "states.edit"
+    QUIT = 0
+    PLAY = 1
+    PAUSE = 2
+    EDIT = 3
 
 state = States.EDIT
 
 class EventTypes(Enum):
     TEMPO = 0
     TRANSPOSE = 1
+
+
+# 声音
+edo = 72
+if edo == 72:
+    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
+if edo == 12:
+    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
+if edo == 24:
+    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
+if edo == 72:
+    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
+
+
+# 造型
+COLORS = {
+    "bg":(81, 78, 97)
+}
+
+ORIGINAL_SPRITES = {
+    0:pygame.image.load("./assets/sprites/72edo/0.png"),
+    1:pygame.image.load("./assets/sprites/72edo/1.png"),
+    2:pygame.image.load("./assets/sprites/72edo/2.png"),
+    3:pygame.image.load("./assets/sprites/72edo/3.png"),
+    4:pygame.image.load("./assets/sprites/72edo/4.png"),
+    5:pygame.image.load("./assets/sprites/72edo/5.png"),
+    "g1":pygame.image.load("./assets/sprites/g1.png"),
+    "g2":pygame.image.load("./assets/sprites/g2.png"),
+    "g3":pygame.image.load("./assets/sprites/g3.png"),
+    "g4":pygame.image.load("./assets/sprites/g4.png"),
+    "g5":pygame.image.load("./assets/sprites/g5.png"),
+}
+
+SPRITES = ORIGINAL_SPRITES.copy()
+
+# 缩放
+DEFAULT_SCALE = 2.0
+SCALE = 2.0

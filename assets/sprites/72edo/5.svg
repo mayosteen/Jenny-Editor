@@ -3,15 +3,15 @@
 
 <svg
    width="80"
-   height="11"
-   viewBox="0 0 80 11"
+   height="116"
+   viewBox="0 0 80 116"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="0s.svg"
-   inkscape:export-filename="0s.png"
-   inkscape:export-xdpi="1920"
-   inkscape:export-ydpi="1920"
+   sodipodi:docname="5.svg"
+   inkscape:export-filename="5.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#666666"
      inkscape:document-units="px"
-     inkscape:zoom="8.3740179"
-     inkscape:cx="30.869292"
-     inkscape:cy="42.333322"
+     inkscape:zoom="8.3740178"
+     inkscape:cx="-12.359658"
+     inkscape:cy="58.812868"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
      inkscape:window-x="-8"
@@ -69,17 +69,33 @@
          transform="translate(-709.85082,-719.50002)"
          id="path151" />
     </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath129">
+      <path
+         d="M 0,1440 H 2900 V 0 H 0 Z"
+         transform="translate(-1259.6973,-717.00002)"
+         id="path129" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath119">
+      <path
+         d="M 0,1440 H 2900 V 0 H 0 Z"
+         transform="translate(-1654,-717.00002)"
+         id="path119" />
+    </clipPath>
   </defs>
   <g
      inkscape:label="图层 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:#00ffff;fill-opacity:1;stroke-width:0.321698"
-       id="rect1-5"
-       width="40"
-       height="1"
-       x="20"
-       y="5" />
+    <path
+       id="path118"
+       d="M -4.3750008,0 H 17 l -1e-6,3.7641509 L -132.625,399 H -154 v -3.76415 z"
+       style="fill:#ffc247;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(0.23391813,0,0,-0.26566416,56.023392,111)"
+       clip-path="url(#clipPath119)"
+       sodipodi:nodetypes="ccccccc" />
   </g>
 </svg>

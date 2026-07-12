@@ -3,15 +3,15 @@
 
 <svg
    width="80"
-   height="53"
-   viewBox="0 0 80 53"
+   height="11"
+   viewBox="0 0 80 11"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="2.svg"
-   inkscape:export-filename="2.png"
-   inkscape:export-xdpi="1920"
-   inkscape:export-ydpi="1920"
+   sodipodi:docname="0.svg"
+   inkscape:export-filename="0.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -75,10 +75,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#f27992;fill-opacity:1;stroke-width:0.745821"
-       id="rect1"
-       width="5"
-       height="43"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.321698"
+       id="rect1-5"
+       width="40"
+       height="1"
        x="20"
        y="5" />
   </g>

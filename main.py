@@ -5,15 +5,13 @@
 # region 初始化
 
 import sys, os
-from enum import Enum
-import zipfile
 from itertools import combinations
 
 import pygame
 from pygame.locals import * # type: ignore
-from apps.config import *
 
-import apps.file
+from core.config import *
+import core.file
 import apps.record
 
 
@@ -31,81 +29,9 @@ pygame.display.set_caption("Jenny Player")
 
 # endregion
 
-# region 常量
 
-INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
-
-class States(Enum):
-    QUIT = "states.quit"
-    PLAY = "states.play"
-    PAUSE = "states.pause"
-    EDIT = "states.edit"
-
-class EventTypes(Enum):
-    TEMPO = 0
-    TRANSPOSE = 1
-
-# endregion
-
-
-# region 声音类
-
-class Song:
-    def __init__(self, file:str):
-        self.load(file)
-        self.last_pause = 0
-
-    def load(self, file:str):
-        pygame.mixer.music.load(file)
-    
-    def onEditing(self):
-        pass
-
-    def onPlaying(self):
-        pass
-
-    @property
-    def ms(self):
-        return self.last_pause + pygame.mixer.music.get_pos()
-
-    @property
-    def s(self):
-        return self.ms / 1000
-
-    def play(self):
-        pygame.mixer.music.play(0)
-        pygame.mixer.music.set_pos(self.last_pause / 1000)
-        pygame.mixer.music.set_volume(0.1)
-
-    def pause(self):
-        pygame.mixer.music.pause()
-
-    def stop(self):
-        global state
-
-        if state:
-            self.last_pause = 0
-            state = States.EDIT
-            pygame.mixer.music.pause()
-
-
-    def play_or_pause(self):
-        global state
-
-        if state == States.EDIT:
-            self.play()
-            state = States.PLAY
-
-        elif state == States.PAUSE:
-            self.last_pause = self.ms
-            self.play()
-            state = States.PLAY
-
-        elif state == States.PLAY:
-            self.pause()
-            state = States.PAUSE
-
-# endregion
+# 声音类
+from core.song import Song
 
 # region Transform类
 
@@ -217,18 +143,6 @@ class Column:
 
 # endregion
 
-# region 文件类
-
-class Project:
-    def __init__(self, file:str):
-        global chords, song
-
-        if file.endswith((".jenny", ".jen", ".zip")):
-            with zipfile.ZipFile(file, "r") as z:
-                z.extractall("./recent")
-
-# endregion
-
 # region 文本类
 
 class Text:
@@ -299,7 +213,7 @@ def update():
             if event.key == K_F1:
                 apps.record.start(screen)
             elif event.key == K_F2:
-                apps.record.stop(f"./recent/{index.get('song') or index.get('ogg')}", "./output.mp4")
+                apps.record.stop(f".\\{index.get('song') or index.get('ogg')}", "./output.mp4")
 
             elif event.key == K_d:
                 cam.x += 80
@@ -409,13 +323,12 @@ def audio():
 
 
 
-chord_map = apps.file.open_json("./chord_map.json")
+chord_map = core.file.open_json(".\\chord_map.json")
 
 if len(sys.argv) > 1:
-    project = Project(sys.argv[1])
-index = apps.file.open_json("./recent/index.json")
-chords = apps.file.open_json(f"./recent/{index['chord']}")
-song = Song(f"./recent/{index.get('song') or index.get('ogg')}")
+    project = core.file.Project(sys.argv[1])
+index, song_path, chords = core.file.read()
+song = Song(song_path)
 
 # endregion
 
@@ -476,8 +389,7 @@ def draw():
     #     当前音乐播放拍数：{beat:.02f}
     #     当前音乐播放列数：{column_index:.02f}""")
     
-    if apps.record.frame % 10 == 0:
-        pygame.display.flip()
+    pygame.display.flip()
 
 def record():
     apps.record.update()
@@ -486,7 +398,6 @@ def record():
 
 
 if __name__ == "__main__":
-    state = States.EDIT
     while state != States.QUIT:
         update()
         audio()

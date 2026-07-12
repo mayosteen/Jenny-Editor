@@ -1,8 +1,0 @@
-WIDTH = 1920
-HEIGHT = 1080
-
-FPS = 60
-
-SCALE = 2.0
-
-RECENT_PROJECT_PATH = "Jenny Editor"

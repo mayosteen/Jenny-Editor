@@ -2,7 +2,8 @@
 import pygame
 from pygame.locals import * # type: ignore
 
-from core.config import *
+from core.config import WIDTH, HEIGHT
+from assets.uiconfig import *
 
 class Window(pygame.Surface):
     def __init__(self, title, *args):
@@ -41,6 +42,9 @@ class Window(pygame.Surface):
     def _draw_content(self):
         """子类重写这里"""
         pass
+
+    def get_surface(self, screen):
+        screen.draw(self)
 
     def collide(self, pos):
         return self.rect.collidepoint(pos)

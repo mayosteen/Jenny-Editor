@@ -4,7 +4,7 @@ from screeninfo import get_monitors
 import pygame
 
 # 窗口
-FULLSCREEN = False
+FULLSCREEN = True
 if FULLSCREEN:
     monitor = get_monitors()[0]
     WIDTH = monitor.width
@@ -39,10 +39,6 @@ INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
 
 
 # 造型
-COLORS = {
-    "bg":(81, 78, 97)
-}
-
 SPRITES = {
     0:pygame.image.load("./assets/sprites/72edo/0.png"),
     1:pygame.image.load("./assets/sprites/72edo/1.png"),

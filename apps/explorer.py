@@ -1,6 +1,6 @@
 from core.config import *
 from core.window import Window
-from assets.uiconfig import icons
+from assets.uiconfig import UI
 
 
 class Desktop(Window):
@@ -19,9 +19,9 @@ class Taskbar(Window):
     
     def _draw_content(self):
         self.fill((81, 78, 97))
-        self.blit(icons["t_mayos"], (0, 0))
+        self.blit(UI["t_mayos"], (0, 0))
         for i, task in enumerate(self.tasks):
-            self.blit(icons["t_"+task.title.lower()], ((i+1)*40, 0))
+            self.blit(UI["t_"+task.title.lower()], ((i+1)*40, 0))
     
     def onclick(self, pos):
         if 0 <= pos[0] < 40:

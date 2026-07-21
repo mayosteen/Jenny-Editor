@@ -8,8 +8,8 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="btn_default.svg"
-   inkscape:export-filename="btn_default.png"
+   sodipodi:docname="btn_pen.svg"
+   inkscape:export-filename="btn_pen.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -27,7 +27,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="8.6590909"
-     inkscape:cx="26.041995"
+     inkscape:cx="51.217848"
      inkscape:cy="15.879265"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
@@ -57,6 +57,6 @@
          id="tspan1"
          x="8"
          y="32"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:'Material Icons';-inkscape-font-specification:'Material Icons';fill:#ffffff;fill-opacity:1">█</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:'Material Symbols Outlined';-inkscape-font-specification:'Material Symbols Outlined';fill:#ffffff;fill-opacity:1">mode</tspan></text>
   </g>
 </svg>

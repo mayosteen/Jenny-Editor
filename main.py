@@ -14,7 +14,7 @@ def main():
 
     desktop = Desktop()
     taskbar = Taskbar([
-        Blackboard(0, 0, 1920, 1040),
+        Blackboard(0, 0, WIDTH, HEIGHT),
         ], 40)
     syswindows = [desktop,taskbar]
     windows = taskbar.tasks
@@ -56,7 +56,7 @@ def main():
             screen.draw(window)
         for window in windows:
             window.update()
-            screen.draw(window)
+            window.get_surface(screen)
         for i, window in enumerate(windows):
             if not window.is_alive:
                 del taskbar.tasks[i]

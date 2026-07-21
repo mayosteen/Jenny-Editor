@@ -3,7 +3,6 @@ import pygame
 from pygame.locals import * # type: ignore
 pygame.init()
 from core.config import *
-from core.window import Window
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '0, 0'
 pygame.display.set_caption("Jenny Editor")
@@ -15,8 +14,9 @@ class Screen:
     def fill(self, color):
         self.surface.fill(color)
     
-    def draw(self, window:Window):
+    def draw(self, window):
         if window._dirty:
+            print(window.title)
             window.redraw()
             window._dirty = False
         self.surface.blit(window, window.rect)

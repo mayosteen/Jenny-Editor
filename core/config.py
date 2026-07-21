@@ -1,17 +1,24 @@
+import os, sys
 from enum import Enum
+from screeninfo import get_monitors
 import pygame
 
-# region 窗口
+# 窗口
+FULLSCREEN = False
+if FULLSCREEN:
+    monitor = get_monitors()[0]
+    WIDTH = monitor.width
+    HEIGHT = monitor.height
+else:
+    WIDTH = 1920
+    HEIGHT = 1080
 
-WIDTH = 1920
-HEIGHT = 1080
 FPS = 60
 
+GRID = 40
+
 # 文件
-RECENT_PROJECT_PATH = "Jenny-Editor\\recent"
-
-
-
+RECENT_PROJECT_PATH = "Jenny-Editor/recent"
 
 # 状态
 class States(Enum):
@@ -28,15 +35,7 @@ class EventTypes(Enum):
 
 
 # 声音
-edo = 72
-if edo == 72:
-    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
-if edo == 12:
-    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
-if edo == 24:
-    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
-if edo == 72:
-    INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
+INTERVALS = [ 0, 72, 42, 23, 58, 105, ]
 
 
 # 造型
@@ -44,7 +43,7 @@ COLORS = {
     "bg":(81, 78, 97)
 }
 
-ORIGINAL_SPRITES = {
+SPRITES = {
     0:pygame.image.load("./assets/sprites/72edo/0.png"),
     1:pygame.image.load("./assets/sprites/72edo/1.png"),
     2:pygame.image.load("./assets/sprites/72edo/2.png"),
@@ -58,8 +57,4 @@ ORIGINAL_SPRITES = {
     "g5":pygame.image.load("./assets/sprites/g5.png"),
 }
 
-SPRITES = ORIGINAL_SPRITES.copy()
-
-# 缩放
-DEFAULT_SCALE = 2.0
-SCALE = 2.0
+FONT = pygame.font.Font("./assets/fonts/xwxxh.ttf", 12)

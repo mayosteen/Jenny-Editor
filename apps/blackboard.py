@@ -179,5 +179,3 @@ class Blackboard(Window):
     def onrelease(self, pos):
         self.mouse = pos
         self.pressed = False
-
-blackboard = Blackboard()

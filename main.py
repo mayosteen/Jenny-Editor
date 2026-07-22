@@ -8,14 +8,15 @@ from apps.explorer import Desktop
 from apps.explorer import Taskbar
 from apps.explorer import Explorer
 from apps.blackboard import Blackboard
-# from apps.control import Control
+from apps.control import Control
 
 
 def main():
 
     desktop = Desktop()
     taskbar = Taskbar([
-        Blackboard(0, 0, WIDTH, HEIGHT),
+        Control(0, 0, WIDTH-40, HEIGHT-80),
+        Blackboard(40, 40, WIDTH-40, HEIGHT-80),
     ], 40)
     windows = taskbar.tasks
     syswindows = [desktop,taskbar]

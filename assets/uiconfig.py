@@ -1,6 +1,8 @@
 from pygame.image import load
 
 UI = {
+    "highlight"   : load("./assets/UI/highlight.png"),
+
     "btn_base"    : load("./assets/UI/btn_base.png"),
     "btn_mayos"   : load("./assets/UI/btn_mayos.png"),
     # "btn_desktop" : load("./assets/UI/btn_desktop.png"),
@@ -43,6 +45,7 @@ UI = {
 }
 
 COLORS = {
+    "control_bg" : (81, 78, 97),
     "blackboard" : (15, 38, 30),
     "btn_white"  : (248, 248, 240),
     "btn_gray"   : (180, 180, 170),

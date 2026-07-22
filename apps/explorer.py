@@ -20,6 +20,7 @@ class Taskbar(Window):
     def _draw_content(self):
         self.fill((81, 78, 97))
         self.blit(UI["t_mayos"], (0, 0))
+        self.blit(UI["highlight"], (len(self.tasks)*40, 0))
         for i, task in enumerate(self.tasks):
             self.blit(UI["t_"+task.title.lower()], ((i+1)*40, 0))
     
@@ -27,6 +28,10 @@ class Taskbar(Window):
         if 0 <= pos[0] < 40:
             pygame.quit()
             sys.exit()
+        else:
+            task_index = pos[0]//40-1
+            if task_index < len(self.tasks)-1:
+                self.tasks.append(self.tasks.pop(task_index))
 
 
 class Explorer(Window):

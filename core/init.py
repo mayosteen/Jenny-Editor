@@ -16,7 +16,7 @@ class Screen:
     
     def draw(self, window):
         if window._dirty:
-            print(window.title)
+            print(f"init.screen.redraw: {window.title}")
             window.redraw()
             window._dirty = False
         self.surface.blit(window.surface, window.rect)

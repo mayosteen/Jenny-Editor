@@ -121,7 +121,7 @@ class Blackboard(Window):
         for button_tag in self.button_tags:
             self.buttons.append(Button(button_tag, (x, 12)))
             x += 52
-        self.buttonbar = Buttonbar(self.buttons, 0, self.rect.h-64, self.rect.w, 64)
+        self.buttonbar = Buttonbar(self.buttons, self.rect.x, self.rect.bottom-64, self.rect.w, 64)
     
     def _draw_content(self):
         pass
@@ -134,7 +134,6 @@ class Blackboard(Window):
         self.mouse = pos
         self.pressed = True
         for b in self.buttons:
-            print(b.tag)
             if b.collide((pos[0], pos[1]-self.rect.h+64)):
                 if b.tag == "btn_close":
                     self.close()

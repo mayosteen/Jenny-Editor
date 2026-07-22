@@ -1,8 +1,7 @@
 from core.config import *
 from assets.uiconfig import *
 
-from core.window import Window
-from core.button import Button
+from core.window import Window, Buttonbar, Button
 
 def quadratic_bezier(t, p):
     """
@@ -44,55 +43,65 @@ def catmull_rom(p, t, tension=0.5):
 class Boardbody(Window):
     def __init__(self, *args):
         super().__init__("Boardbody", *args)
+        self.state = "pen"
+        self.color = COLORS["btn_white"]
+        self.pensize = 3
         self.page = 0
         self.last_page = 0
     
     def _draw_content(self):
-        self.fill((15, 38, 30))
+        self.fill(COLORS["blackboard"])
+
+    def draw_line(self, pos1, pos2):
+        if self.state == "pen":
+            if self.pensize <= 1:
+                pygame.draw.aaline(self.surface, self.color, pos1, pos2, 1)
+            else:
+                pygame.draw.line(self.surface, self.color, pos1, pos2, self.pensize)
+            if self.pensize > 5:
+                pygame.draw.circle(self.surface, self.color, pos1, self.pensize//2)
+        elif self.state == "eraser":
+            pygame.draw.circle(self.surface, COLORS["blackboard"], pos1, 100)
+
+    def load_page(self, *pos):
+        self.blit(pygame.image.load(f"./screenshots/page_{self.page:03d}.png"), pos)
+    def save_page(self):
+        self.save(f"./screenshots/page_{self.page:03d}.png")
+
+    def skip_to(self):
+        pass
     
     def rewind(self):
-        if self.page > 0:
-            if self.page >= self.last_page:
-                pygame.image.save(self, f"./screenshots/page_{self.page:03d}.png")
+        self.save_page()
+        if self.page >= 1:
             self.page -= 1
-            self.blit(pygame.image.load(f"./screenshots/page_{self.page:03d}.png"), (0, 0))
+            self.load_page(0, 0)
+            self.page += 1
+            self.load_page(self.rect.w//3, self.rect.h//4)
+            self.page -= 1
     
     def forward(self):
-        if self.page >= self.last_page:
-            pygame.image.save(self, f"./screenshots/page_{self.page:03d}.png")
-            self.fill((15, 38, 30))
-            self.blit(pygame.image.load(f"./screenshots/page_{self.page:03d}.png"), (-self.rect.w//3, -self.rect.h//4))
-            self.page += 1
+        self.save_page()
+        if self.page == self.last_page:
             self.last_page += 1
+            self._draw_content()
         else:
             self.page += 1
-            self.blit(pygame.image.load(f"./screenshots/page_{self.page:03d}.png"), (0, 0))
+            self.load_page(0, 0)
+            self.page -= 1
+        self.load_page(-self.rect.w//3, -self.rect.h//4)
+        self.page += 1
 
 
-class Buttonbar(Window):
-    def __init__(self, buttons, *args):
-        super().__init__("Buttonbar", *args)
-        self.buttons = buttons
-    
-    def draw_button(self, btn:Button):
-        self.blit(btn.image, btn.rect)
-
-    def _draw_content(self):
-        self.fill((15, 38, 30))
-        for button in self.buttons:
-            self.draw_button(button)
 
 class Blackboard(Window):
     def __init__(self, *args):
         super().__init__("Blackboard", *args)
         self.boardbody = Boardbody(*args)
         self.pressed = False
-        self.state = "pen"
-        self.pensize = 3
         self.mouse_pos = [(0, 0), (0, 0), (0, 0), (0, 0)]
         self.step = 20
         self.mouse = (0, 0)
-        self.color = COLORS["btn_white"]
         self.button_tags = [
             "btn_close",
             "btn_pen",
@@ -127,20 +136,20 @@ class Blackboard(Window):
         for b in self.buttons:
             print(b.tag)
             if b.collide((pos[0], pos[1]-self.rect.h+64)):
-                if b.tag == 0:
+                if b.tag == "btn_close":
                     self.close()
                 elif b.tag == "btn_pen":
-                    self.state = "pen"
+                    self.boardbody.state = "pen"
                 elif b.tag == "btn_pen_1":
-                    self.pensize = 1
+                    self.boardbody.pensize = 1
                 elif b.tag == "btn_pen_2":
-                    self.pensize = 2
+                    self.boardbody.pensize = 2
                 elif b.tag == "btn_pen_3":
-                    self.pensize = 5
+                    self.boardbody.pensize = 5
                 elif b.tag == "btn_pen_4":
-                    self.pensize = 10
+                    self.boardbody.pensize = 10
                 elif b.tag == "btn_eraser":
-                    self.state = "eraser"
+                    self.boardbody.state = "eraser"
                 elif b.tag == "btn_rewind":
                     self.boardbody.rewind()
                 elif b.tag == "btn_forward":
@@ -148,32 +157,18 @@ class Blackboard(Window):
                 else:
                     color = COLORS.get(b.tag)
                     if color is not None:
-                        self.state = "pen"
-                        self.color = color
+                        self.boardbody.state = "pen"
+                        self.boardbody.color = color
                         
     def onmove(self, pos):
         self.mouse_pos.pop(0)
         self.mouse_pos.append(pos)
         if self.pressed:
-            if self.state == "pen":
-                # pygame.draw.line(self, self.color, self.mouse, pos, 3)
-                for t in range(self.step):
-                    if self.pensize == 1:
-                        pygame.draw.aaline(self.boardbody, self.color, 
-                                        catmull_rom(self.mouse_pos, t/self.step), 
-                                        catmull_rom(self.mouse_pos, (t+1)/self.step), 
-                                        1)
-                    else:
-                        pygame.draw.line(self.boardbody, self.color, 
-                                        catmull_rom(self.mouse_pos, t/self.step), 
-                                        catmull_rom(self.mouse_pos, (t+1)/self.step), 
-                                        self.pensize)
-                        if self.pensize > 5:
-                            pygame.draw.circle(self.boardbody, self.color, catmull_rom(self.mouse_pos, t/self.step), self.pensize//2)
-            elif self.state == "eraser":
-                # pygame.draw.line(self, (15, 38, 30), self.mouse, pos, 150)
-                for t in range(self.step):
-                    pygame.draw.circle(self.boardbody, (15, 38, 30), catmull_rom(self.mouse_pos, t/self.step), 100)
+            for t in range(self.step):
+                self.boardbody.draw_line(
+                    catmull_rom(self.mouse_pos, t/self.step), 
+                    catmull_rom(self.mouse_pos, (t+1)/self.step)
+                )
         self.mouse = pos
 
     def onrelease(self, pos):

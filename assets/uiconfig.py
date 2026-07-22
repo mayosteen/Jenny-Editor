@@ -35,7 +35,7 @@ UI = {
     "t_mayos"   : load("./assets/UI/t_mayos.png"),
     "t_desktop" : load("./assets/UI/t_desktop.png"),
     # "t_close"   : load("./assets/UI/t_close.png"),
-    # "t_control" : load("./assets/UI/t_control.png"),
+    "t_control" : load("./assets/UI/t_control.png"),
     # "t_play"    : load("./assets/UI/t_play.png"),
     # "t_pause"   : load("./assets/UI/t_pause.png"),
     "t_explorer": load("./assets/UI/t_explorer.png"),
@@ -43,6 +43,7 @@ UI = {
 }
 
 COLORS = {
+    "blackboard" : (15, 38, 30),
     "btn_white"  : (248, 248, 240),
     "btn_gray"   : (180, 180, 170),
     "btn_blue"   : (140, 190, 255),

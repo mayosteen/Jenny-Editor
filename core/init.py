@@ -19,6 +19,6 @@ class Screen:
             print(window.title)
             window.redraw()
             window._dirty = False
-        self.surface.blit(window, window.rect)
+        self.surface.blit(window.surface, window.rect)
 
 screen = Screen(WIDTH, HEIGHT)

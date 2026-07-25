@@ -1,37 +1,34 @@
 from core.config import *
-from core.window import Window
-from assets.uiconfig import UI
+from assets.uiconfig import *
+from core.window import Window, Button
+
+from apps.control import Control
 
 
 class Desktop(Window):
     def __init__(self):
-        super().__init__("Desktop")
+        super().__init__("Desktop", (0, 0, WIDTH, HEIGHT-40))
         self.bg = pygame.image.load("./assets/sprites/bg.png")
+        self.buttons = [
+            Button(self, "btn_explorer", "z", (12,  12)),
+            Button(self, "btn_control",  "z", (64,  12)),
+        ]
     
     def _draw_content(self):
         self.blit(self.bg, (0, 0))
-
-
-class Taskbar(Window):
-    def __init__(self, tasks, h):
-        super().__init__("Desktop", 0, HEIGHT-h, WIDTH, h)
-        self.tasks = tasks
-    
-    def _draw_content(self):
-        self.fill((81, 78, 97))
-        self.blit(UI["t_mayos"], (0, 0))
-        self.blit(UI["highlight"], (len(self.tasks)*40, 0))
-        for i, task in enumerate(self.tasks):
-            self.blit(UI["t_"+task.title.lower()], ((i+1)*40, 0))
+        for b in self.buttons:
+            self.draw_btn(b)
     
     def onclick(self, pos):
-        if 0 <= pos[0] < 40:
-            pygame.quit()
-            sys.exit()
-        else:
-            task_index = pos[0]//40-1
-            if task_index < len(self.tasks)-1:
-                self.tasks.append(self.tasks.pop(task_index))
+        for b in self.buttons:
+            if b.collide(pos):
+                print(f"{__name__}.{self.__class__.__name__}.onclick:{b.tag}")
+                if b.tag == "btn_explorer":
+                    t.new(Explorer(0, 0, 1280, 720))
+                    print("new")
+                elif b.tag == "btn_control":
+                    t.new(Control(0, 0, 1280, 720))
+                return b.tag
 
 
 class Explorer(Window):
@@ -43,7 +40,5 @@ class Explorer(Window):
         self.fill((128, 128, 128))
         self.draw_rect((255, 255, 255), (1, 1, self.rect.w-2, self.rect.h-2))
         self.draw_rect((128, 128, 128), self.mouse + (40, 40))
-    
-    def onclick(self, pos):
-        self.mouse = pos
-        self.mark_dirty()
+        for b in self.buttons:
+            self.draw_btn(b)

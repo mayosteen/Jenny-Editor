@@ -4,44 +4,51 @@
 
 # region 初始化
 from core.init import *
+from core.tasks import TaskManager, Taskbar
 from apps.explorer import Desktop
-from apps.explorer import Taskbar
 from apps.explorer import Explorer
-from apps.blackboard import Blackboard
 from apps.control import Control
 
 
 def main():
+    global t
+    t.new(Desktop())
+    t.new(Explorer(0, 0, WIDTH//2, HEIGHT//2))
+    t.new(Explorer(40, 40, WIDTH//2, HEIGHT//2))
+    t.new(Explorer(80, 80, WIDTH//2, HEIGHT//2))
 
-    desktop = Desktop()
-    taskbar = Taskbar([
-        Control(0, 0, WIDTH-40, HEIGHT-80),
-        Blackboard(40, 40, WIDTH-40, HEIGHT-80),
-    ], 40)
-    windows = taskbar.tasks
-    syswindows = [desktop,taskbar]
-    active_window = windows[-1]
+    taskbar = Taskbar(t, 40)
+    active_window = t.ask[-1]
     touched = False
 
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
-                quit()
+                # quit
+                if t.ask[-1].title == "Desktop":
+                    pygame.quit()
+                    sys.exit()
+                else:
+                    t.close(t.ask[-1])
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    quit()
+                    # quit
+                    if t.ask[-1].title == "Desktop":
+                        pygame.quit()
+                        sys.exit()
+                    else:
+                        t.close(t.ask[-1])
             
             elif event.type == MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
 
                 touched = False
                 
-                for window in reversed(windows):
+                for window in reversed(t.ask):
                     if window.collide(mouse_pos):
                         active_window = window
+                        t.activate(active_window)
                         active_window.mousedown(mouse_pos)
-                        windows.remove(active_window)
-                        windows.append(active_window)
                         touched = True
                         break
                 if taskbar.collide(mouse_pos) and (not touched):
@@ -55,19 +62,19 @@ def main():
                 mouse_pos = pygame.mouse.get_pos()
                 active_window.mouseup(mouse_pos)
         
+        t.update()
+        
         screen.fill((20, 20, 20))
-        for window in syswindows:
-            window._draw_content()
-            screen.draw(window)
-        for window in windows:
+        taskbar._draw_content()
+        screen.draw(taskbar)
+        for window in t.ask:
             window.update()
-            window.get_surface(screen)
-        for i, window in enumerate(windows):
-            if not window.is_alive:
-                print(window.title)
-                del taskbar.tasks[i]
+            screen.draw(window)
 
         pygame.display.flip()
+    
+    pygame.quit()
+    sys.exit()
 
 
 if __name__ == "__main__":

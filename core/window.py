@@ -2,90 +2,141 @@
 import pygame
 from pygame.locals import * # type: ignore
 
-from core.config import WIDTH, HEIGHT
+from core.config import *
 from assets.uiconfig import *
 
-from core.button import Button
-
-class Window:
-    def __init__(self, title, *args):
-        self.title = title
-        if len(args) == 0:  # ()
-            self.rect = pygame.Rect(0, 0, WIDTH, HEIGHT)
-        elif len(args) == 2:  # (w, h)
-            self.rect = pygame.Rect(WIDTH//2, HEIGHT//2, args[0], args[1])
-            self.rect.center = WIDTH//2, HEIGHT//2
-        elif len(args) == 4:  # (x, y, w, h)
-            self.rect = pygame.Rect(*args)
-        else:
-            raise ValueError(f"传入Window的参数应为0/2/4个，但是用户却填了{len(args)}个，分别是{args}")
-        self.surface = pygame.Surface(self.rect.size, flags=SRCALPHA)
-            
-        self.is_alive = True
-        self._dirty = True
-
-        self.title = title
-
-    def blit(self, surface, rect):
-        self.surface.blit(surface, rect)
+class Button:
+    def __init__(self, window, tag:str, key:str, pos:tuple):
+        self.window = window
+        self._tag = tag
+        self.image = UI[tag]
+        self.key = key.lower()
+        self.pos = pos
+        self.rect = self.image.get_rect()
+        self.update()
     
-    def fill(self, color):
-        self.surface.fill(color)
-
-    def save(self, path):
-        pygame.image.save(self.surface, path)
-
-    def update(self):
-        """每帧调用，用于刷新逻辑"""
-        if self._dirty:
-            self.redraw()
-            self._dirty = False
-
-    # 绘制
-    def redraw(self):
-        """强制重绘"""
-        self._draw_content()
-
-    def _draw_content(self):
-        """子类重写这里"""
-        pass
-
-    def get_surface(self, screen):
-        screen.draw(self)
-
-    def mark_dirty(self):
-        self._dirty = True
-
-    def draw_rect(self, color, rect):
-        pygame.draw.rect(self.surface, color, rect)
-
     def collide(self, pos):
         return self.rect.collidepoint(pos)
+    
+    @property
+    def tag(self):
+        return self._tag
+    
+    @tag.setter
+    def tag(self, new):
+        self._tag = new
+        self.image = UI[new]
+    
+    def update(self):
+        """
+        Button position:
+        (q)   (e)
 
-    def mousedown(self, pos):
-        self.onclick((pos[0]-self.rect.x, pos[1]-self.rect.y))
+        (z)   (c)
+        """
+        if self.key in "qz":
+            self.rect.left = self.pos[0]
+        elif self.key in "ec":
+            self.rect.right = self.window.rect.w - self.pos[0]
+        if self.key in "qe":
+            self.rect.top = self.pos[1]
+        elif self.key in "zc":
+            self.rect.bottom = self.window.rect.h - self.pos[1]
+        else:
+            raise KeyError(f'{__name__}.{self.__class__.__name__}.__init__:Invalid key:"{self.key}"')
+
+class Window:
+    def __init__(self, title, *rect):
+        self.title = title
+        self.rect = pygame.Rect(rect)
+        self.surface = pygame.Surface(self.rect.size, flags=SRCALPHA)
+        self.buttons = [
+            Button(self, "btn_close", "z", (12,  12)),
+            Button(self, "btn_max",   "z", (64,  12)),
+            Button(self, "btn_min",   "z", (116, 12)),
+            Button(self, "btn_drag",  "z", (168, 12)),
+        ]
+            
+        self.state = "window"
+        self.dragging = False
+        self.drag_rect = pygame.Rect(rect)
+        self.drag_offset = (0, 0)
+        self._dirty = True
+
+        self.title = title
+        print(f"{__name__}.{self.__class__.__name__}.__init__:Added window {self.title}")
+
+    # 渲染
+    def fill(self, color): self.surface.fill(color)
+    def blit(self, surface, rect): self.surface.blit(surface, rect)
+    def draw_rect(self, color, rect): pygame.draw.rect(self.surface, color, rect)
+    def draw_btn(self, button:Button): self.surface.blit(button.image, button.rect)
+    def mark_dirty(self): self._dirty = True
+    def redraw(self): self._draw_content()
+
+    # 存储
+    def save(self, path): pygame.image.save(self.surface, path)
+    
+    # 逻辑
+    def collide(self, pos): return self.rect.collidepoint(pos)
+    def close(self):
+        self.state = "close"
+        del self
+    
+    # 事件
+    def mousedown(  self, pos): self.onclick(  (pos[0]-self.rect.x, pos[1]-self.rect.y))
+    def mousemotion(self, pos): self.onmove(   (pos[0]-self.rect.x, pos[1]-self.rect.y))
+    def mouseup(    self, pos): self.onrelease((pos[0]-self.rect.x, pos[1]-self.rect.y))
+
+    ############################## 子类重写函数 ##############################
+
+    def _draw_content(self):
+        # 子类重写这里
+        pass
+
+    def update(self):
+        # 每帧调用，用于刷新逻辑
+        pass
 
     def onclick(self, pos):
-        """子类重写这里"""
-        pass
+        for b in self.buttons:
+            if b.collide(pos):
+                print(f"{__name__}.{self.__class__.__name__}.onclick:{b.tag}")
+                if b.tag == "btn_close":
+                    self.close()
+                if b.tag == "btn_max":
+                    self.state = "max"
+                if b.tag == "btn_min":
+                    self.state = "min"
+                if b.tag == "btn_drag":
+                    self.dragging = True
+                    self.drag_offset = (
+                        pos[0] - self.rect.x,
+                        pos[1] - self.rect.y
+                    )
+                return b.tag
 
-    def mousemotion(self, pos):
-        self.onmove((pos[0]-self.rect.x, pos[1]-self.rect.y))
 
     def onmove(self, pos):
-        """子类重写这里"""
-        pass
+        # 子类重写这里
+        print(f"{__name__}.{self.__class__.__name__}.onmove:{pos}")
+        if self.dragging:
+            self.drag_rect.x = pos[0] - self.drag_offset[0]
+            self.drag_rect.y = pos[1] - self.drag_offset[1]
 
-    def mouseup(self, pos):
-        self.onrelease((pos[0]-self.rect.x, pos[1]-self.rect.y))
+
 
     def onrelease(self, pos):
-        """子类重写这里"""
-        pass
+        # 子类重写这里
+        print(f"{__name__}.{self.__class__.__name__}.onrelease:{pos}")
+        if self.dragging:
+            self.dragging = False
+            self.rect.x = pos[0] - self.drag_offset[0]
+            self.rect.y = pos[1] - self.drag_offset[1]
 
-    def close(self):
-        self.is_alive = False
-        del self
+
+
+
 
 def resize(sur, w, h):
     return pygame.transform.scale(sur, (w, h))

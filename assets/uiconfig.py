@@ -7,6 +7,10 @@ UI = {
     "btn_mayos"   : load("./assets/UI/btn_mayos.png"),
     # "btn_desktop" : load("./assets/UI/btn_desktop.png"),
     "btn_close"   : load("./assets/UI/btn_close.png"),
+    "btn_max"     : load("./assets/UI/btn_max.png"),
+    "btn_window"  : load("./assets/UI/btn_window.png"),  # 取消最大化
+    "btn_min"     : load("./assets/UI/btn_min.png"),
+    "btn_drag"    : load("./assets/UI/btn_drag.png"),
 
     "btn_control" : load("./assets/UI/btn_control.png"),
     "btn_play"    : load("./assets/UI/btn_play.png"),

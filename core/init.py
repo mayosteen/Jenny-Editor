@@ -16,9 +16,12 @@ class Screen:
     
     def draw(self, window):
         if window._dirty:
-            print(f"init.screen.redraw: {window.title}")
+            print(f"{__name__}.{self.__class__.__name__}.redraw:{window.title}")
             window.redraw()
             window._dirty = False
-        self.surface.blit(window.surface, window.rect)
+        if window.dragging:
+            self.surface.blit(window.surface, window.drag_rect)
+        else:
+            self.surface.blit(window.surface, window.rect)
 
 screen = Screen(WIDTH, HEIGHT)

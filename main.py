@@ -1,21 +1,17 @@
 # main.py
 # coding:utf-8
 
+import pygame
+from pygame.locals import *  # type:ignore
+from core.config import screen, WIDTH, HEIGHT
 
-# region 初始化
-from core.init import *
 from core.tasks import TaskManager, Taskbar
-from apps.explorer import Desktop
-from apps.explorer import Explorer
-from apps.control import Control
-
 
 def main():
     global t
-    t.new(Desktop())
-    t.new(Explorer(0, 0, WIDTH//2, HEIGHT//2))
-    t.new(Explorer(40, 40, WIDTH//2, HEIGHT//2))
-    t.new(Explorer(80, 80, WIDTH//2, HEIGHT//2))
+    t = TaskManager()
+    t.new("terminal", 0, 0, WIDTH, HEIGHT)
+    t.new("desktop", 0, 0, WIDTH, HEIGHT-40)
 
     taskbar = Taskbar(t, 40)
     active_window = t.ask[-1]
@@ -25,19 +21,11 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 # quit
-                if t.ask[-1].title == "Desktop":
-                    pygame.quit()
-                    sys.exit()
-                else:
-                    t.close(t.ask[-1])
+                t.close(t.ask[-1])
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     # quit
-                    if t.ask[-1].title == "Desktop":
-                        pygame.quit()
-                        sys.exit()
-                    else:
-                        t.close(t.ask[-1])
+                    t.close(t.ask[-1])
             
             elif event.type == MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
@@ -72,9 +60,6 @@ def main():
             screen.draw(window)
 
         pygame.display.flip()
-    
-    pygame.quit()
-    sys.exit()
 
 
 if __name__ == "__main__":

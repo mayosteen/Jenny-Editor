@@ -1,7 +1,23 @@
+import json, zipfile
+
 from core.config import *
-from assets.uiconfig import *
 
 from core.window import Window, Button
+
+
+class Project:
+    def __init__(self, project_file_name:str):
+        if project_file_name.lower() == "default":
+            pass
+        elif project_file_name.lower().endswith((".jenny", ".jen", ".jny", ".zip")):
+            with zipfile.ZipFile(project_file_name, "r") as z:
+                z.extractall("./project")
+        with open("./project/index.json", "r", encoding="utf-8") as f:
+            self.index = json.load(f)
+
+
+project = Project("default")
+
 
 class Control(Window):
     def __init__(self, *args):
@@ -12,14 +28,17 @@ class Control(Window):
             Button(self, "btn_rewind",  "c", (116, 12)),
         ]
     
+
     def _draw_content(self):
         self.fill((128, 128, 128))
         self.draw_rect(COLORS["control_bg"], (1, 1, self.rect.w-2, self.rect.h-2))
         for b in self.buttons:
             self.draw_btn(b)
     
+
     def get_surface(self, screen):
         screen.draw(self)
+
 
     def onclick(self, pos):
         for b in self.buttons:
@@ -46,7 +65,6 @@ class Control(Window):
         if self.dragging:
             self.drag_rect.x = pos[0] - self.drag_offset[0]
             self.drag_rect.y = pos[1] - self.drag_offset[1]
-
 
 
     def onrelease(self, pos):

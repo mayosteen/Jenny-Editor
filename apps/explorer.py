@@ -1,17 +1,32 @@
-from core.config import *
-from assets.uiconfig import *
+import pygame
 from core.window import Window, Button
 
-from apps.control import Control
 
+class Terminal(Window):
+    def __init__(self, *rect):
+        super().__init__("terminal", *rect)
+    
+    def _draw_content(self):
+        self.fill((0, 0, 0))
+    
+    def onclick(self, pos):
+        for b in self.buttons:
+            if b.collide(pos):
+                print(f"{__name__}.{self.__class__.__name__}.onclick:{b.tag}")
+                if b.tag == "explorer":
+                    t.new("explorer", 0, 0, 1280, 720)
+                    print("new")
+                elif b.tag == "control":
+                    t.new("control", 0, 0, 1280, 720)
+                return b.tag
 
 class Desktop(Window):
-    def __init__(self):
-        super().__init__("Desktop", (0, 0, WIDTH, HEIGHT-40))
+    def __init__(self, *rect):
+        super().__init__("desktop", *rect)
         self.bg = pygame.image.load("./assets/sprites/bg.png")
         self.buttons = [
-            Button(self, "btn_explorer", "z", (12,  12)),
-            Button(self, "btn_control",  "z", (64,  12)),
+            Button(self, "explorer", "z", (12,  12)),
+            Button(self, "control",  "z", (64,  12)),
         ]
     
     def _draw_content(self):
@@ -23,17 +38,17 @@ class Desktop(Window):
         for b in self.buttons:
             if b.collide(pos):
                 print(f"{__name__}.{self.__class__.__name__}.onclick:{b.tag}")
-                if b.tag == "btn_explorer":
-                    t.new(Explorer(0, 0, 1280, 720))
+                if b.tag == "explorer":
+                    t.new("explorer", 0, 0, 1280, 720)
                     print("new")
-                elif b.tag == "btn_control":
-                    t.new(Control(0, 0, 1280, 720))
+                elif b.tag == "control":
+                    t.new("control", 0, 0, 1280, 720)
                 return b.tag
 
 
 class Explorer(Window):
-    def __init__(self, *args):
-        super().__init__("Explorer", *args)
+    def __init__(self, *rect):
+        super().__init__("explorer", *rect)
         self.mouse = (0, 0)
     
     def _draw_content(self):

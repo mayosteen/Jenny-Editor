@@ -1,5 +1,6 @@
 # tkinter 笔记
 import tkinter as tk
+import webbrowser
 
 window = tk.Tk()
 window.geometry('1280x720+640+360')  # 设置窗口大小
@@ -21,7 +22,11 @@ img_2 = tk.PhotoImage(file="assets/UI/btn_mayos.png")
 label_with_image = tk.Label(window, image=img_1)  # 设置图片
 label_with_image.pack()
 
-btn_with_image = tk.Button(window, image=img_1)
+def open_the_web():
+    print("按下了btn_with_image")
+    webbrowser.open("https://www.bilibili.com/video/BV1GJ411x7h7")
+
+btn_with_image = tk.Button(window, image=img_1, command=open_the_web)
 btn_with_image.pack()
 
 btn_free_1 = tk.Button(window, text="x=100, y=100")  # 自由布局
@@ -39,5 +44,28 @@ def change_image():
 
 btn_free_4 = tk.Button(window, text="点击按钮切换图片", command=change_image)
 btn_free_4.place(x=200, y=200)
+
+list1 = ['', "", 0, 0.0, (), [], (0)]
+print(all(list1))  # 但凡列表包含 list1 中的任意一个元素就返回 False
+
+pairs = [
+    ("TTF",     2016),
+    ("DL",      2016),
+    ("",        2017),
+    ("MayOS",   2024),
+    ("MayLine", 0   ),
+    ("",        0   ),
+]
+print(pairs)
+
+pairs_result = list(map(all, pairs))  # 数据清洗
+print(pairs_result)
+
+pairs_result = list(filter(all, pairs))  # 使用 filter 函数进行数据清洗，仅保留返回 True 的数据
+print(pairs_result)
+
+# 这种情况下，zip() 函数只会把能够配对的内容写进去，多的内容不会出现在新列表中，也不会报错。
+x, y = zip(*pairs_result)  # 将一个列表反向 zip 为几个列表以便 pyecharts 使用
+print("x",x);print("y",y)
 
 window.mainloop()

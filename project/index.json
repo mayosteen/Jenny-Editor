@@ -1,0 +1,11 @@
+{
+    "name":"example",
+    "ogg":"example.ogg",
+    "bpm":120,
+    "offset":0,
+    "tuning":"12",
+    "tonic":0,
+    "chord":{
+        "chord":"F"
+    }
+}

@@ -2,8 +2,7 @@
 import pygame
 from pygame.locals import * # type: ignore
 
-from core.config import *
-from assets.uiconfig import *
+from core.config import UI
 
 class Button:
     def __init__(self, window, tag:str, key:str, pos:tuple):
@@ -51,10 +50,10 @@ class Window:
         self.rect = pygame.Rect(rect)
         self.surface = pygame.Surface(self.rect.size, flags=SRCALPHA)
         self.buttons = [
-            Button(self, "btn_close", "z", (12,  12)),
-            Button(self, "btn_max",   "z", (64,  12)),
-            Button(self, "btn_min",   "z", (116, 12)),
-            Button(self, "btn_drag",  "z", (168, 12)),
+            Button(self, "close", "z", (12,  12)),
+            Button(self, "max",   "z", (64,  12)),
+            Button(self, "min",   "z", (116, 12)),
+            Button(self, "drag",  "z", (168, 12)),
         ]
             
         self.state = "window"
@@ -87,6 +86,8 @@ class Window:
     def mousedown(  self, pos): self.onclick(  (pos[0]-self.rect.x, pos[1]-self.rect.y))
     def mousemotion(self, pos): self.onmove(   (pos[0]-self.rect.x, pos[1]-self.rect.y))
     def mouseup(    self, pos): self.onrelease((pos[0]-self.rect.x, pos[1]-self.rect.y))
+    def keydown(    self, key): self.onkeydown( key)
+    def keyup(      self, key): self.onkeyup(   key)
 
     ############################## 子类重写函数 ##############################
 
@@ -102,13 +103,13 @@ class Window:
         for b in self.buttons:
             if b.collide(pos):
                 print(f"{__name__}.{self.__class__.__name__}.onclick:{b.tag}")
-                if b.tag == "btn_close":
+                if b.tag == "close":
                     self.close()
-                if b.tag == "btn_max":
+                if b.tag == "max":
                     self.state = "max"
-                if b.tag == "btn_min":
+                if b.tag == "min":
                     self.state = "min"
-                if b.tag == "btn_drag":
+                if b.tag == "drag":
                     self.dragging = True
                     self.drag_offset = (
                         pos[0] - self.rect.x,
@@ -125,7 +126,6 @@ class Window:
             self.drag_rect.y = pos[1] - self.drag_offset[1]
 
 
-
     def onrelease(self, pos):
         # 子类重写这里
         print(f"{__name__}.{self.__class__.__name__}.onrelease:{pos}")
@@ -133,22 +133,17 @@ class Window:
             self.dragging = False
             self.rect.x = pos[0] - self.drag_offset[0]
             self.rect.y = pos[1] - self.drag_offset[1]
+    
 
+    def onkeydown(self, key):
+        # 子类重写这里
+        print(f"{__name__}.{self.__class__.__name__}.onkeydown:{key}")
+    
 
-
+    def onkeyup(self, key):
+        # 子类重写这里
+        print(f"{__name__}.{self.__class__.__name__}.onkeyup:{key}")
 
 
 def resize(sur, w, h):
     return pygame.transform.scale(sur, (w, h))
-
-class Buttonbar(Window):
-    def __init__(self, buttons, *args):
-        super().__init__("Buttonbar", *args)
-        self.buttons = buttons
-    
-    def draw_button(self, btn:Button):
-        self.blit(btn.image, btn.rect)
-
-    def _draw_content(self):
-        for button in self.buttons:
-            self.draw_button(button)

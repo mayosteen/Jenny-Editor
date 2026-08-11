@@ -1,11 +1,23 @@
 {
     "name":"example",
-    "ogg":"example.ogg",
-    "bpm":120,
-    "offset":0,
+    "music":"五月天 - 后来的我们.mp3",
+    "bpm":158,
+    "offset":0.70,
     "tuning":"12",
     "tonic":0,
-    "chord":{
-        "chord":"F"
-    }
+    "chords":[
+        {"tag":"F","start":0.00},
+        {"tag":"G","start":4.00},
+        {"tag":"Em","start":8.00},
+        {"tag":"Am","start":12.00},
+        {"tag":"Dm","start":16.00},
+        {"tag":"Gsus","start":24.00},
+        {"tag":"G","start":32.00},
+        {"tag":"C","start":40.00}
+    ],
+    "subtitles":[
+        {"start":39.00, "text":"然后呢"},
+        {"start":47.50, "text":"他们说你的心似乎痊愈了"},
+        {"start":63.50, "text":"也开始有个人为你守护着"}
+    ]
 }

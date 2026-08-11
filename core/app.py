@@ -1,41 +1,53 @@
-# core/app.py
-import pygame
-from config import WIDTH, HEIGHT
-from core.ui import load_ui
-from core.wm import WindowManager
-from core.taskbar import Taskbar
-from core.input import InputManager
-from apps.desktop import Desktop
-from apps.terminal import Terminal
+from core.template import *
+from core.events import event_bus
+from core.wm import WM
 
 class MayOS:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("MayOS")
-
-        # ✅ 关键：display 初始化后再加载 UI
-        load_ui()
-
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (0, 0)
+        self.screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME)
         self.clock = pygame.time.Clock()
-        self.wm = WindowManager()
-        self.input = InputManager(self.wm)
+        self.running = True
+        self.wm = WM()
+        event_bus.subscribe("request_open", self.open)
+        event_bus.emit("request_open", "terminal")
+            
+    
+    def open(self, app:str):
+        app = app.lower()
+        if   app == "terminal":
+            from apps.terminal import Terminal
+            self.wm.open(Terminal())
+        elif app == "subtitle":
+            from apps.subtitle import Subtitle
+            self.wm.open(Subtitle())
 
-        self.desktop = Desktop()
-        self.taskbar = Taskbar(self.wm)
-
-        self.wm.open(self.desktop)
-        self.wm.open(Terminal())
-        self.wm.add_system(self.taskbar)
 
     def run(self):
-        while True:
-            if not self.input.process():
-                break
+        while self.running:
+            for e in pygame.event.get():
+                if e.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif e.type == MOUSEBUTTONDOWN:
+                    for window in reversed(self.wm.windows):
+                        if window.rect.collidepoint(e.pos):
+                            self.wm.active(window)
+                            window.on_mouse_down((e.pos[0]-window.rect.x, e.pos[1]-window.rect.y))
+                            break
+                elif e.type == MOUSEBUTTONUP:
+                    for window in reversed(self.wm.windows):
+                        if window.rect.collidepoint(e.pos):
+                            window.on_mouse_up((e.pos[0]-window.rect.x, e.pos[1]-window.rect.y))
+                            break
+                elif e.type == KEYDOWN:
+                    self.wm.windows[-1].on_key_down(e)
+                elif e.type == KEYUP:
+                    self.wm.windows[-1].on_key_up(e)
 
-            self.wm.update()
+            self.screen.fill((0, 0, 0))
             self.wm.draw(self.screen)
+            self.wm.update()
             pygame.display.flip()
             self.clock.tick(60)
-
-        pygame.quit()

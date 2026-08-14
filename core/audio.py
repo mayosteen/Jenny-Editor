@@ -4,6 +4,24 @@ import re
 import math
 from fractions import Fraction
 
+primes = [
+    2,3,5,7,11,13,17,19,23,29,31,37,41,
+    43,47,53,59,61,67,71,73,79,83,89,97
+]
+
+class Monzo:
+    def __init__(self, vector:list):
+        self.vector = vector
+
+    def __str__(self):
+        return "[%s⟩" % ", ".join(self.vector)
+    
+    def plus(self, another):
+
+        return Monzo([
+            self.vector[i] if self
+            ])
+
 tokens = [
     "Tschu", "Schu", "Scy", "Xcy", "Chy",
     "Ah", "Fu", "Ju", "Ly", "Su", "My", "Pu", "Zy", "Ku",
@@ -60,7 +78,6 @@ def tokenize(s):
             tklist.append(s[i])  # 无法匹配的字符单独输出
             i += 1
     return tklist, result
-
 
 
 def output(s):

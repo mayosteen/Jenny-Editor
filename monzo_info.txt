@@ -1,0 +1,49 @@
+tokenscores = {
+    # 0D
+    "Ah":   Fraction(1, 1),
+    # 1D
+    "+":    Fraction(2, 1),
+    "-":    Fraction(1, 2),
+    # 2D
+    "Chy":  Fraction(3, 2),
+    "Scy":  Fraction(9, 4),
+    "Xcy":  Fraction(27, 8),
+    "Fu":   Fraction(2, 3),
+    "Schu": Fraction(4, 9),
+    "Ju":   Fraction(8, 27),
+    # 3D
+    "Ly":   Fraction(5, 4),
+    "Su":   Fraction(4, 5),
+    "li":   Fraction(5, 4),
+    "s":    Fraction(4, 5),
+    # 4D
+    "My":   Fraction(7, 4),
+    "Pu":   Fraction(4, 7),
+    "mi":   Fraction(7, 4),
+    "p":    Fraction(4, 7),
+    # 5D
+    "Zy":   Fraction(11, 4),
+    "Tschu":Fraction(4, 11),
+    "Ku":   Fraction(4, 11),
+    "zi":   Fraction(11, 4),
+    "k":    Fraction(4, 11),
+}
+输入：
+m = Monzo("Chymik") 已知shasav单词格式“Chymik”被分为 Chy mi k 三个token
+m = Monzo("[-1 1 0 1 -1⟩")
+m = Monzo("[-1 1 0 1 -1>")
+m = Monzo("(-1 1 0 1 -1 0)")
+m = Monzo([-1, 1, 0, 1, -1])
+m = Monzo(-1, 1, 0, 1, -1, 0)
+m = Monzo((-1, 1, 0, 1, -1, 0))
+m = Monzo(Fraction(21, 22))
+m = Monzo("21/22")
+(等效)
+输出：
+shasav(m) 或 m.to_shasav() -> "Chymik"
+str(m) 或 m.to_string() -> "[-1 1 0 1 -1⟩"
+list(m) 或 m.to_list() -> [-1, 1, 0, 1, -1]
+tuple(m) 或 m.to_tuple() -> (-1, 1, 0, 1, -1)
+m.to_fraction() -> Fraction(21, 22)
+float() 或 m.to_float() ->
+

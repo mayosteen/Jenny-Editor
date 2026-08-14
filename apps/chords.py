@@ -3,12 +3,12 @@ from core.template import *
 from core.events import event_bus
 from core.window import Window
 
-class Subtitle(Window):
+class Chords(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 1240, 2560, 200))
+        super().__init__("subtitle", pygame.Rect(0, 0, 1280, 720))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 120)
-        self.showing = "Subtitle"
+        self.showing = "Chords"
     
     def render_subtitle(self):
         foreground = self.font.render(self.showing, True, (255, 255, 255))
@@ -18,7 +18,7 @@ class Subtitle(Window):
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
-        self.surface.fill((0, 0, 0, 0))
+        self.surface.fill((22,33,44))
         pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
@@ -30,35 +30,29 @@ class Subtitle(Window):
         beat = song.get_beat()
         if beat < song.chords[0]["start"]:
             self.showing = "chords"
-        for subtext in song.subtitles:
-            if beat >= subtext["start"]:
-                self.showing = subtext["text"]
+        for chord in song.chords:
+            if beat >= chord["start"]:
+                self.showing = chord["tag"]
             else:
                 break
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法
-        print(f"subtitle.on_mouse_down: {pos}")
+        print(f"chords.on_mouse_down: {pos}")
         pass
 
     def on_mouse_up(self, pos:tuple[int, int]):
         # 子类重写方法
-        print(f"subtitle.on_mouse_up: {pos}")
+        print(f"chords.on_mouse_up: {pos}")
         pass
 
     def on_key_down(self, event:pygame.event.Event):
         # 子类重写方法
-        print(f"subtitle.on_key_down: {event}")
-        if event.unicode == "z":
-            song.play()
-        if event.unicode == "x":
-            song.pause()
-        if event.unicode == "c":
-            song.resume()
+        print(f"chords.on_key_down: {event}")
         pass
 
     def on_key_up(self, event:pygame.event.Event):
         # 子类重写方法
-        print(f"subtitle.on_key_up: {event}")
+        print(f"chords.on_key_up: {event}")
         pass
             

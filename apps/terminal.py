@@ -1,36 +1,38 @@
 # core/terminal.py
+import time
 from core.template import *
 from core.events import event_bus
 from core.window import Window
 
 class Terminal(Window):
     def __init__(self):
-        super().__init__("terminal", pygame.Rect(0, 0, 1920, 1080))
+        super().__init__("terminal", pygame.Rect(0, 0, 2560, 1440))
 
-        self.font = pygame.font.Font("assets/fonts/SIMSUN.TTF", 16)
+        self.font = pygame.font.Font("assets/fonts/svgafix.fon", 12)
+        self.path = r"M:\MayOS\>"
         self.commands = [""]
-        event_bus.subscribe("pygame.event", self.handle_event)
+        event_bus.subscribe("print", self.print)
 
     
     def draw(self, screen):
         self.surface.fill((0, 0, 0))
         for i in range(len(self.commands)):
-            text_surface = self.font.render("> " + self.commands[i], False, (255, 255, 255))
-            self.surface.blit(text_surface, (10, 30 + i * 20))
+            # 检测是否为系统提示
+            command = self.commands[i]
+            if command != "" and command[0] == "ÿ":
+                text_surface = self.font.render(self.commands[i][1:], True, (255, 255, 255))
+            else:
+                text_surface = self.font.render(self.path + self.commands[i], True, (255, 255, 255))
+            self.surface.blit(text_surface, (0, i * 16))
+        if time.time()-int(time.time())<=0.5:
+            pygame.draw.rect(self.surface, (255, 255, 255), (
+                (len(self.commands[-1])+len(self.path))*8, 
+                (len(self.commands)-1)*16,
+                8, 16))
         screen.blit(self.surface, self.rect)
     
     def update(self):
         pass
-
-    def handle_event(self, event):
-        if event.type == MOUSEBUTTONDOWN:
-            self.on_mouse_down(event)
-        elif event.type == MOUSEBUTTONUP:
-            self.on_mouse_up(event)
-        elif event.type == KEYDOWN:
-            self.on_key_down(event)
-        elif event.type == KEYUP:
-            self.on_key_up(event)
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法
@@ -47,30 +49,56 @@ class Terminal(Window):
             print("terminal.on_key_down: \\n")
             command = self.commands[-1].rstrip("\n\r")
             print(command)
-            if command:
+            if command[0] == "/":
                 self.run(command)
-            self.commands.append("")
+            self.enter()
         elif event.key == K_BACKSPACE:
             print("terminal.on_key_down: ←")
-            if len(self.commands[-1]) != 0:
+            if len(self.commands[-1]) > 0:
                 self.commands[-1] = self.commands[-1][:-1]
         elif event.unicode and event.unicode.isprintable():
             print(f"terminal.on_key_down: {event.unicode}")
+            if self.commands[-1] != "" and event.unicode == "/":
+                self.enter()
             self.commands[-1] += event.unicode
 
     def on_key_up(self, event:pygame.event.Event):
-        # 子类重写方法
-        print(f"terminal.on_key_up: {event}")
-        pass
+        if event.key in (K_RETURN, K_KP_ENTER):
+            print("terminal.on_key_up: \\n")
+        elif event.key == K_BACKSPACE:
+            print("terminal.on_key_up: ←")
+        elif event.unicode and event.unicode.isprintable():
+            print(f"terminal.on_key_up: {event.unicode}")
+
+    def enter(self):
+        print(f"terminal.enter:_")
+        self.commands.append("")
+
+    def print(self, command:str):
+        if command != "":
+            self.commands.append("ÿ" + command)
+        else:
+            raise IndexError("you have just printed 棍母")
+        # self.enter()
 
     def run(self, command:str):
-        print(command.split())
-        state, app, *args = command.split()
-        if state == "/open":
-            event_bus.emit("request_open", app)
-        elif state == "/close":
-            event_bus.emit("request_close", app)
-        elif state == "/list":
-            if app == "window":
-                event_bus.emit("request_window_list")
+        params = command.split()
+        if len(params) == 1:
+            state = params[0]
+            if state in ["/ai", "/ymq", "/ym7", "/zenia"]:
+                self.print("Zenia AI is unavailable.")
+            else:
+                self.print("Invalid command.")
+                self.print("state")
+        elif len(params) >= 2:
+            state, app, *args = params
+            if state == "/open":
+                event_bus.emit("request_open", app)
+            elif state == "/close":
+                event_bus.emit("request_close", app)
+            elif state == "/list":
+                if app == "window":
+                    event_bus.emit("request_window_list")
+            else:
+                self.print("Invalid command.")
             

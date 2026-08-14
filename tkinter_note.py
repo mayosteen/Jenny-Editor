@@ -97,4 +97,8 @@ print(time.strftime("%Y-%m-%d %H:%M:%S"))  # 获取当前时间
 ●%Z 当前时区的名称
 """
 
+from tkinter import ttk
+box = ttk.Combobox(window, width=5, value=list(range(1, 13)))
+box.place(x=165, y=245)
+
 window.mainloop()

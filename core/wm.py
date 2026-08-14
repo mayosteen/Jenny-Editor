@@ -14,11 +14,16 @@ class WM:
         if window in self.windows:
             self.windows.remove(window)
             self.windows.append(window)
+        elif isinstance(window, str):
+            for w in self.windows[:]:
+                if w.title.lower() == window.lower():
+                    self.windows.remove(w)
+                    self.windows.append(w)
 
     def close(self, window):
         if window in self.windows:
             self.windows.remove(window)
-        elif isinstance(window, str) and window.lower() != "terminal":
+        elif isinstance(window, str):
             for w in self.windows[:]:
                 if w.title.lower() == window.lower():
                     self.windows.remove(w)

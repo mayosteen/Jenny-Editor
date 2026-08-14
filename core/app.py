@@ -6,12 +6,14 @@ class MayOS:
     def __init__(self):
         pygame.init()
         os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (0, 0)
-        self.screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME)
+        self.screen = pygame.display.set_mode((2560, 1440), pygame.NOFRAME)
         self.clock = pygame.time.Clock()
         self.running = True
         self.wm = WM()
         event_bus.subscribe("request_open", self.open)
         event_bus.emit("request_open", "terminal")
+        event_bus.emit("request_open", "subtitle")
+        event_bus.emit("request_open", "chords")
             
     
     def open(self, app:str):
@@ -22,6 +24,9 @@ class MayOS:
         elif app == "subtitle":
             from apps.subtitle import Subtitle
             self.wm.open(Subtitle())
+        elif app == "chords":
+            from apps.chords import Chords
+            self.wm.open(Chords())
 
 
     def run(self):
@@ -42,6 +47,8 @@ class MayOS:
                             window.on_mouse_up((e.pos[0]-window.rect.x, e.pos[1]-window.rect.y))
                             break
                 elif e.type == KEYDOWN:
+                    if e.unicode == "/":
+                        self.wm.active("terminal")
                     self.wm.windows[-1].on_key_down(e)
                 elif e.type == KEYUP:
                     self.wm.windows[-1].on_key_up(e)

@@ -1,42 +1,45 @@
+# region Init
+
 import re
 from fractions import Fraction
 from itertools import zip_longest
+from math import log2
 
-PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+PRIMES = [2, 3, 5, 7, 11, 13, 17]
 
-# tokenscores = {
-#     # 0D
-#     "Ah":   Fraction(1, 1),
-#     # 1D
-#     "+":    Fraction(2, 1),
-#     "-":    Fraction(1, 2),
-#     # 2D
-#     "Chy":  Fraction(3, 2),
-#     "Scy":  Fraction(9, 4),
-#     "Xcy":  Fraction(27, 8),
-#     "Fu":   Fraction(2, 3),
-#     "Schu": Fraction(4, 9),
-#     "Ju":   Fraction(8, 27),
-#     # 3D
-#     "Ly":   Fraction(5, 4),
-#     "Su":   Fraction(4, 5),
-#     "li":   Fraction(5, 4),
-#     "s":    Fraction(4, 5),
-#     # 4D
-#     "My":   Fraction(7, 4),
-#     "Pu":   Fraction(4, 7),
-#     "mi":   Fraction(7, 4),
-#     "p":    Fraction(4, 7),
-#     # 5D
-#     "Zy":   Fraction(11, 4),
-#     "Tschu":Fraction(4, 11),
-#     "Ku":   Fraction(4, 11),
-#     "zi":   Fraction(11, 4),
-#     "k":    Fraction(4, 11),
-# }
+tokenscores = {
+    # 0D
+    "Ah":   Fraction(1, 1),
+    # 1D
+    "+":    Fraction(2, 1),
+    "-":    Fraction(1, 2),
+    # 2D
+    "Chy":  Fraction(3, 2),
+    "Scy":  Fraction(9, 4),
+    "Xcy":  Fraction(27, 8),
+    "Fu":   Fraction(2, 3),
+    "Schu": Fraction(4, 9),
+    "Ju":   Fraction(8, 27),
+    # 3D
+    "Ly":   Fraction(5, 4),
+    "Su":   Fraction(4, 5),
+    "li":   Fraction(5, 4),
+    "s":    Fraction(4, 5),
+    # 4D
+    "My":   Fraction(7, 4),
+    "Pu":   Fraction(4, 7),
+    "mi":   Fraction(7, 4),
+    "p":    Fraction(4, 7),
+    # 5D
+    "Zy":   Fraction(11, 4),
+    "Tschu":Fraction(4, 11),
+    "Ku":   Fraction(4, 11),
+    "zi":   Fraction(11, 4),
+    "k":    Fraction(4, 11),
+}
 
-# # 按长度降序，保证最长匹配优先
-# SORTED_TOKENS = sorted(tokenscores.keys(), key=len, reverse=True)
+# 按长度降序，保证最长匹配优先
+SORTED_TOKENSCORES = sorted(tokenscores.keys(), key=len, reverse=True)
 
 tokens = [
     "Ah",
@@ -49,55 +52,36 @@ tokens = [
 
 SORTED_TOKENS = sorted(tokens, key=len, reverse=True)
 
+dimens = [
+    {0:"Ah"},
+    {-3:"Ju", -2:"Schu", -1:"Fu", +1:"Chy", +2:"Scy", +3:"Xcy",},
+                        {-1:"Su", +1:"Ly",},
+                        {-1:"Pu", +1:"My",},
+                        {-1:"Ku", +1:"Zy",},
+]
 
+# endregion
 
+# region Harmonomym
 
+# harmononym -> "AhChyChymik"
+def h_c(harmononym: str) -> list[str]:
+    return re.findall(r'[A-Z][a-z]*', harmononym)
 
+# endregion
 
+# region Monzo
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def tokenize(text: str) -> list[str]:
-    """
-    最长匹配分词。
-    tokens: 已按长度降序排列的 token 列表（即 SORTED_TOKENS）
-    scores: token -> Fraction 映射
-    返回: 切分后的 token 序列
-    """
+# chordonym -> "Chymik"
+def c_d(chordonym: str) -> list[str]:
     i = 0
-    n = len(text)
+    n = len(chordonym)
     result = []
 
     while i < n:
         matched = None
         for tok in SORTED_TOKENS:
-            if text.startswith(tok, i):
+            if chordonym.startswith(tok, i):
                 matched = tok
                 break
         if matched is not None:
@@ -105,51 +89,181 @@ def tokenize(text: str) -> list[str]:
             i += len(matched)
         else:
             # 无法识别的字符：跳过或报错，视需求二选一
-            raise ValueError(f"无法识别的字符 '{text[i]}' at pos {i}")
-    
+            raise ValueError(f"无法识别的字符 '{chordonym[i]}' at pos {i}")
     return result
 
+# dimenonyms -> ["Chy", "mi", "k"]
+def d_f(dimenonyms: list[str]) -> Fraction:
+    f = Fraction(1, 1)
+    for dimen in dimenonyms:
+        f *= tokenscores.get(dimen, Fraction(1, 1))
+    return f
 
-def monzo_tuple(args) -> list[int]:
-    arg_type = "none"
-    result = [0]
-    if args:
-        if isinstance(args, str):
-            if set("0123456789") & set(args):
-                arg_type = "monzo str"
-                result = [int(x) for x in re.findall(r'-?\d+', args)]
-                if not result:
-                    result.append(0)
+# int -> 21
+# int -> 22
+def i_l(n):
+    i = 2
+    factors = {}
+    while i * i <= n:
+        while n % i == 0:
+            factors[i] = factors.get(i, 0) + 1
+            n //= i
+        i += 1 if i == 2 else 2
+    if n > 1:
+        factors[n] = 1
+    return factors
+
+# fraction -> Fraction(22, 21)
+def f_l(r: Fraction):
+    nf = i_l(r.numerator)
+    df = i_l(r.denominator)
+    return [nf.get(p,0) - df.get(p,0) for p in PRIMES]
+
+# vector_string -> "[-1 1 0 1 -1⟩", "{-1; 1; 0; 1; -1}" or ...
+def vs_l(vector_string) -> list[int]:
+    return [int(x) for x in re.findall(r'-?\d+', vector_string)]
+
+# list -> [-1, 1, 0, 1, -1]
+def any_l(args) -> list[int]:
+    # print(args)
+    if isinstance(args, (tuple, list)) and len(args) == 1:
+        return any_l(*args)
+    if isinstance(args, str):
+        if set("0123456789") & set(args):
+            if "/" in args:
+                return any_l(Fraction(args))
             else:
-                arg_type = "shasav_str"
-        elif isinstance(args, (tuple, list)):
-            print(f"monzo_tuple | list:{args}")
-    print(f"{arg_type}: {args} -> {result}")
-    return result
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                return vs_l(args) # final
+        return any_l(c_d(args))
+    elif isinstance(args, list) and isinstance(args[0], str):
+        return any_l(d_f(args))
+    elif isinstance(args, Fraction):
+        return f_l(args) # final
+    elif isinstance(args, (tuple, list)) and isinstance(args[0], int):
+        return list(args) # final
+    elif isinstance(args, Monzo):
+        return args.vec
+    else:
+        return []
 
 
 class Monzo:
     def __init__(self, *args):
-        self.vec = monzo_tuple(args)
+        self.vec = any_l(args)
+        self.update()
+
+    # 去掉后面的 0
+    def update(self):
+        self.vec = self.vec[:next((i for i in range(len(self.vec)-1, -1, -1) if self.vec[i] != 0), 0)+1]
     
-    def __add__(self, another:"Monzo"):
-        return Monzo([x + y for x, y in zip_longest(self.vec, another.vec, fillvalue=0)])
+    def __add__(self, other):
+        if isinstance(other, Monzo):
+            return Monzo([x + y for x, y in zip_longest(self.vec, other.vec, fillvalue=0)])
+        return NotImplemented
+        
+
+    def __mul__(self, other: "int|Val"):
+        if isinstance(other, int):
+            return Monzo([x*other for x in self.vec])
+        if isinstance(other, Val):
+            return sum(v*e for v,e in zip(self.vec, other.vec))
+        return NotImplemented
+
+    def __str__(self) -> str:
+        return "[{}⟩".format(" ".join([str(x) for x in self.vec]))
+    
+    def __repr__(self) -> str:
+        return "Monzo({})".format(", ".join([str(x) for x in self.vec]))
+
+    def to_fraction(self) -> Fraction:
+        num = 1
+        den = 1
+        for p, e in zip(PRIMES, self.vec):
+            if e > 0:
+                num *= p ** e
+            elif e < 0:
+                den *= p ** (-e)
+        return Fraction(num, den)
+
+    def to_chordonym_no_octave(self) -> str:
+        if len(self.vec) <= 1:
+            return "Ah"
+        Uppercase = 1
+        chordonym = ""
+        for p, e in zip(dimens[1:], self.vec[1:]):
+            if e in p:
+                dimen = p.get(e, "")
+                if Uppercase:
+                    chordonym += dimen
+                    Uppercase = 0
+                else:
+                    chordonym += dimen.lower().replace("y", "i").replace("u", "")
+        return chordonym
+
+    def to_chordonym(self) -> str:
+        chordonym = self.to_chordonym_no_octave()
+        octaves = self.vec[0] - any_l(chordonym)[0]
+        if octaves > 0:
+            chordonym += "+" * abs(octaves)
+        elif octaves < 0:
+            chordonym += "-" * abs(octaves)
+        return chordonym
+
+# endregion
+
+# region Val
+
+class Val:
+    def __init__(self, edo):
+        self._edo = edo
+        self.update()
+
+    def update(self):
+        self.vec = [round(self._edo*log2(p)) for p in PRIMES]
+    
+    def __str__(self):
+        return "⟨{}]".format(" ".join(map(str,self.vec)))
+    
+    @property
+    def edo(self):
+        return self._edo
+
+    @edo.setter
+    def edo(self, value):
+        self._edo = value
+        self.update()
+
+# endregion
+
+# region Unittest
+
+if __name__ == "__main__":
+    e_72 = Val(72)
+    for a in [
+        "Chymik",
+        ["Chy", "mi", "k"],
+        "[-1 1 0 1 -1⟩", 
+        "{-1; 1; 0; 1; -1}",
+        "-1, 1, 0, 1, -1",
+        "21/22",
+        Fraction(21, 22),
+        [-1, 1, 0, 1, -1],
+
+        "Chymik+",
+        ["Chy", "mi", "k", "+"],
+        "[0 1 0 1 -1⟩", 
+        "{0; 1; 0; 1; -1}",
+        "0, 1, 0, 1, -1",
+        "21/11",
+        Fraction(21, 11),
+        [0, 1, 0, 1, -1],
+
+        "42/11",
+        "84/11",
+        "168/11",
+        "420/11",
+    ]:
+        m = Monzo(a)
+        print(a, m, m.to_fraction(), m.to_chordonym(), m * e_72)
+
+# endregion

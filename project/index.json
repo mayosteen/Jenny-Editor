@@ -6,7 +6,7 @@
     "tuning":"12",
     "tonic":0,
     "chords":[
-        {"start":0.00,  "shasaf":"AhFuFuli",    "tag":"F"},
+        {"start":0.00,  "shasaf":"AhFuFuli",    "tag":"Ahta"},
         {"start":2.00,  "shasaf":"ChyScyChyli", "tag":"G"},
         {"start":4.00,  "shasaf":"ChyLyChyli",  "tag":"Em"},
         {"start":6.00,  "shasaf":"AhFuFuli", "tag":"Am"},

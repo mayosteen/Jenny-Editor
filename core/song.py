@@ -1,7 +1,8 @@
-# timer.py
+# song.py
 import time
 import pygame
 import json
+from core.shasav import Monzo, Harmononym, Val, Tuning
 
 pygame.mixer.pre_init(frequency=48000, size=-16, channels=2, buffer=2048)
 pygame.mixer.init()
@@ -16,9 +17,12 @@ class Song:
         self.bpm = data["bpm"]
         self.offset = data.get("offset", 0.0)
         self.tonic = data.get("tonic", 0)
+        self.val = Val(int(data["tuning"]))
+        self.tuning = Tuning(int(data["tuning"]))
 
-        self.chords = data["chords"]      # [{tag, start(beat)}]
-        self.subtitles = data["subtitles"]  # [{start(beat), text}]
+        self.chords = data["chords"]      # [{start(beat), shasav}]
+        self.subtitles = data.get("subtitles", [])  # [{start(beat), text}]
+        self.sprites = data.get("sprites", [])  # [{start(beat), text}]
         
         self.playing = False
         self.paused = False

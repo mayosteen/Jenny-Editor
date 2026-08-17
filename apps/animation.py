@@ -6,9 +6,9 @@ from core.image import UI
 from core.events import event_bus
 from core.window import Window
 
-class Chords(Window):
+class Animation(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 0, 2560, 1240))
+        super().__init__("subtitle", pygame.Rect(0, 0, 1920, 1080))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"
@@ -25,32 +25,35 @@ class Chords(Window):
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
-        self.surface.fill((103, 102, 129))
+        self.surface.fill((139, 28, 27))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, self.rect.h-1, self.rect.w, 1))
         bar = pygame.Surface((self.rect.w, 2), flags=SRCALPHA)
         bar.fill((224, 133, 152, 77))
-        for i in range(-10, 11):
-            self.surface.blit(bar, (0, self.rect.h // 2 - i*song.tuning.vec[1]*2 -1))
-        for i in song.chords:
-            hs = Harmononym(i["shasaf"])
-            p = UI["0D"]
-            for h in hs.monzos:
-                r = p.get_rect()
-                r.x = self.rect.w // 2 + (i["start"] * self.speed - self.x)
-                r.centery = self.rect.h // 2 - ((song.val@h)*2)
-                self.surface.blit(p, r)
-            for comma in combinations(hs.monzos, 2):
-                h0, h1 = song.val@comma[0], song.val@comma[1]
-                comma_72 = abs(h0-h1)
-                if comma_72 in song.tuning.vec:
-                    p = UI[f"{song.tuning.vec.index(comma_72)+1}D"]
-                    r = p.get_rect()
-                    r.x = self.rect.w // 2 + (i["start"] * self.speed - self.x)
-                    r.centery = self.rect.h // 2 - (h0+h1)  # /2*2 抵消
-                    self.surface.blit(p, r)
+        for sprite in song.sprites:
+            s = pygame.image.load(f'project/{sprite["image"]}')
+            r = s.get_rect()
+            if self.beat <= sprite["animation"][0]["start"]:
+                p = sprite["position"]
+                r.center = (
+                    self.rect.w//2+( p[0] ),
+                    self.rect.h//2-( p[1] ))
+            else:
+                for p in range(len(sprite["animation"])-1):
+                    a0 = sprite["animation"][p]
+                    a1 = sprite["animation"][p+1]
+                    if a0["start"] <= self.beat <= a1["start"]:
+                        p0 = a0["position"]
+                        p1 = a1["position"]
+                        offset = (self.beat-a0["start"])/(a1["start"]-a0["start"])
+                        r.center = (
+                            self.rect.w//2+( p0[0]*(1-offset) + p1[0]*offset ),
+                            self.rect.h//2-( p0[1]*(1-offset) + p1[1]*offset ))
+                            
+            self.surface.blit(s, r)
+
 
 
         # self.render_subtitle()
@@ -58,21 +61,20 @@ class Chords(Window):
     
     def update(self):
         self.beat = song.get_beat()
-        self.x = self.speed * self.beat
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法
-        print(f"chords.on_mouse_down: {pos}")
+        print(f"animation.on_mouse_down: {pos}")
         pass
 
     def on_mouse_up(self, pos:tuple[int, int]):
         # 子类重写方法
-        print(f"chords.on_mouse_up: {pos}")
+        print(f"animation.on_mouse_up: {pos}")
         pass
 
     def on_key_down(self, event:pygame.event.Event):
         # 子类重写方法
-        print(f"chords.on_key_down: {event}")
+        print(f"animation.on_key_down: {event}")
         if event.unicode == "z":
             song.play()
         if event.unicode == "x":
@@ -82,6 +84,6 @@ class Chords(Window):
 
     def on_key_up(self, event:pygame.event.Event):
         # 子类重写方法
-        print(f"chords.on_key_up: {event}")
+        print(f"animation.on_key_up: {event}")
         pass
             

@@ -7,6 +7,16 @@ from math import log2
 
 PRIMES = [2, 3, 5, 7, 11, 13, 17]
 
+COMMAS = [
+    Fraction(2, 1),
+    Fraction(3, 2),
+    Fraction(5, 4),
+    Fraction(7, 4),
+    Fraction(11, 4),
+    Fraction(13, 4),
+    Fraction(17, 4),
+]
+
 tokenscores = {
     # 0D
     "Ah":   Fraction(1, 1),
@@ -48,6 +58,7 @@ tokens = [
     "Ly",   "Su",   "li",   "s",
     "My",   "Pu",   "mi",   "p",
     "Zy",   "Ku",   "zi",   "k",
+    "ta",   "cra",  "na",   "vra"
 ]
 
 SORTED_TOKENS = sorted(tokens, key=len, reverse=True)
@@ -62,15 +73,11 @@ dimens = [
 
 # endregion
 
-# region Harmonomym
+# region Monzo
 
 # harmononym -> "AhChyChymik"
 def h_c(harmononym: str) -> list[str]:
     return re.findall(r'[A-Z][a-z]*', harmononym)
-
-# endregion
-
-# region Monzo
 
 # chordonym -> "Chymik"
 def c_d(chordonym: str) -> list[str]:
@@ -131,12 +138,12 @@ def any_l(args) -> list[int]:
     if isinstance(args, str):
         if set("0123456789") & set(args):
             if "/" in args:
-                return any_l(Fraction(args))
+                return f_l(Fraction(args))
             else:
                 return vs_l(args) # final
-        return any_l(c_d(args))
+        return f_l(d_f(c_d(args)))
     elif isinstance(args, list) and isinstance(args[0], str):
-        return any_l(d_f(args))
+        return f_l(d_f(args))
     elif isinstance(args, Fraction):
         return f_l(args) # final
     elif isinstance(args, (tuple, list)) and isinstance(args[0], int):
@@ -156,18 +163,14 @@ class Monzo:
     def update(self):
         self.vec = self.vec[:next((i for i in range(len(self.vec)-1, -1, -1) if self.vec[i] != 0), 0)+1]
     
-    def __add__(self, other):
-        if isinstance(other, Monzo):
-            return Monzo([x + y for x, y in zip_longest(self.vec, other.vec, fillvalue=0)])
-        return NotImplemented
-        
+    def __add__(self, other:"Monzo") -> "Monzo":
+        return Monzo([x + y for x, y in zip_longest(self.vec, other.vec, fillvalue=0)])
 
-    def __mul__(self, other: "int|Val"):
-        if isinstance(other, int):
-            return Monzo([x*other for x in self.vec])
-        if isinstance(other, Val):
-            return sum(v*e for v,e in zip(self.vec, other.vec))
-        return NotImplemented
+    def __sub__(self, other:"Monzo") -> "Monzo":
+        return Monzo([x - y for x, y in zip_longest(self.vec, other.vec, fillvalue=0)])
+
+    def __mul__(self, other:int):
+        return Monzo([x*other for x in self.vec])
 
     def __str__(self) -> str:
         return "[{}⟩".format(" ".join([str(x) for x in self.vec]))
@@ -202,13 +205,66 @@ class Monzo:
 
     def to_chordonym(self) -> str:
         chordonym = self.to_chordonym_no_octave()
-        octaves = self.vec[0] - any_l(chordonym)[0]
+        octaves = (self.vec[0] if self.vec else 0) - any_l(chordonym)[0]
         if octaves > 0:
             chordonym += "+" * abs(octaves)
         elif octaves < 0:
             chordonym += "-" * abs(octaves)
         return chordonym
 
+# endregion
+
+class Harmononym:
+    def __init__(self, harmononym:str):
+        self.monzos = [Monzo(chordonym) for chordonym in h_c(harmononym)]
+        self.bass = self.monzos[0]
+
+    def __str__(self):
+        return "".join([monzo.to_chordonym() for monzo in self.monzos])
+
+    def na(self):
+        m = self.monzos.copy()
+        self.monzos = [
+            m[0],  # Ah
+            m[1],  # Chy
+            m[1] - m[2] +m[0],  # Chy - Ly (+Ah) = Chys
+        ]
+
+    def cra(self):
+        m = self.monzos.copy()
+        self.monzos = [
+            m[2] - m[1] +m[0],  # Ly - Chy (+Ah) = Fuly
+            m[2],  # Ly
+            m[0],  # Ah
+        ]
+
+    def vra(self):
+        m = self.monzos.copy()
+        self.monzos = [
+            m[2],  # Ly
+            m[1] + m[2] -m[0],  # Chy + Ly (-Ah) = Chyli
+            m[1],  # Chy
+        ]
+
+# region Functograph
+
+def Functograph(f, df_c="AhChyLy"):
+    df_h = Harmononym(df_c)
+    f = c_d(f)
+    if "cra" in f: df_h.cra()
+    if  "na" in f: df_h. na()
+    if "vra" in f: df_h.vra()
+    print(f)
+    print(df_h)
+
+# Functograph("Ahcranavra")
+# Functograph("Ahcrana")
+# Functograph("Ahcravra")
+# Functograph("Ahnavra")
+# Functograph("Ahcra")
+# Functograph("Ahna")
+# Functograph("Ahvra")
+# Functograph("Ahta")
 # endregion
 
 # region Val
@@ -220,6 +276,9 @@ class Val:
 
     def update(self):
         self.vec = [round(self._edo*log2(p)) for p in PRIMES]
+
+    def __matmul__(self, other:Monzo):
+        return sum(v*e for v,e in zip(self.vec, other.vec))
     
     def __str__(self):
         return "⟨{}]".format(" ".join(map(str,self.vec)))
@@ -235,8 +294,35 @@ class Val:
 
 # endregion
 
-# region Unittest
+# region Val
 
+class Tuning:
+    def __init__(self, edo):
+        self._edo = edo
+        self.update()
+
+    def update(self):
+        self.vec = [round(self._edo*log2(c)) for c in COMMAS]
+
+    def __matmul__(self, other:Monzo):
+        return sum(v*e for v,e in zip(self.vec, other.vec))
+    
+    def __str__(self):
+        return "[{}]".format("-".join(map(str,self.vec)))
+    
+    @property
+    def edo(self):
+        return self._edo
+
+    @edo.setter
+    def edo(self, value):
+        self._edo = value
+        self.update()
+
+# endregion
+
+# region Unittest
+"""
 if __name__ == "__main__":
     e_72 = Val(72)
     for a in [
@@ -265,5 +351,5 @@ if __name__ == "__main__":
     ]:
         m = Monzo(a)
         print(a, m, m.to_fraction(), m.to_chordonym(), m * e_72)
-
+"""
 # endregion

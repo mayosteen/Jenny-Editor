@@ -8,7 +8,7 @@ class Subtitle(Window):
         super().__init__("subtitle", pygame.Rect(0, 1240, 2560, 200))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 120)
-        self.showing = "Subtitle"
+        self.showing = "歌词"
     
     def render_subtitle(self):
         foreground = self.font.render(self.showing, True, (255, 255, 255))
@@ -19,17 +19,17 @@ class Subtitle(Window):
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
         self.surface.fill((0, 0, 0, 0))
-        pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
-        pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
-        pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
-        pygame.draw.rect(self.surface, (180, 179, 193), (0, self.rect.h-1, self.rect.w, 1))
+        # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
+        # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
+        # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
+        # pygame.draw.rect(self.surface, (180, 179, 193), (0, self.rect.h-1, self.rect.w, 1))
         self.render_subtitle()
         screen.blit(self.surface, self.rect)
     
     def update(self):
         beat = song.get_beat()
         if beat < song.chords[0]["start"]:
-            self.showing = "chords"
+            self.showing = "歌词"
         for subtext in song.subtitles:
             if beat >= subtext["start"]:
                 self.showing = subtext["text"]
@@ -55,7 +55,6 @@ class Subtitle(Window):
             song.pause()
         if event.unicode == "c":
             song.resume()
-        pass
 
     def on_key_up(self, event:pygame.event.Event):
         # 子类重写方法

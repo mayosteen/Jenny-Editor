@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="1920"
+   height="1080"
+   viewBox="0 0 1920 1080"
+   sodipodi:docname="P260817-195610.png"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:antialias-rendering="true">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="1920"
+       height="1080"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <image
+     width="1920"
+     height="1080"
+     preserveAspectRatio="none"
+     xlink:href="../P260817-195610.png"
+     id="image1"
+     style="display:none;stroke-width:1.33333"
+     x="0"
+     y="0" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1"
+     style="display:inline">
+    <rect
+       style="display:inline;fill:#000000;fill-opacity:0.697581;stroke-width:0.999996"
+       id="rect1-45"
+       width="1920"
+       height="1080"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#000000;fill-opacity:0.697581;stroke-width:0.999996"
+       id="rect1"
+       width="120"
+       height="1080"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#000000;fill-opacity:0.697581;stroke-width:0.999996"
+       id="rect1-4"
+       width="120"
+       height="1080"
+       x="1800"
+       y="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:53px;line-height:1.25;font-family:'Calisto MT';-inkscape-font-specification:'Calisto MT';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#000000;fill-opacity:0.697581"
+       x="-296.61328"
+       y="75.636703"
+       id="text1"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="-296.61328"
+         y="75.636703"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:53px;font-family:'Lapisia Elegant';-inkscape-font-specification:'Lapisia Elegant';fill:#ffffff;fill-opacity:1">（36, 8, 19, 32, 2, 14）</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0.304436;stroke-width:0.999997"
+       id="rect4"
+       width="103"
+       height="1"
+       x="1809"
+       y="900" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+       id="rect5"
+       width="59"
+       height="1.9999995"
+       x="1833"
+       y="847" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+       id="rect5-2"
+       width="59"
+       height="1.9999995"
+       x="1833"
+       y="735" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.999999"
+       id="rect5-2-2"
+       width="57"
+       height="1.9999995"
+       x="1835"
+       y="707" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+       id="rect5-2-9"
+       width="59"
+       height="1.9999995"
+       x="1833"
+       y="791" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.999999"
+       id="rect5-5"
+       width="46"
+       height="1.9999999"
+       x="1846"
+       y="815.99994" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.999999"
+       id="rect5-5-6"
+       width="46"
+       height="1.9999995"
+       x="1846"
+       y="760" />
+    <path
+       style="fill:#ffc247;fill-opacity:1"
+       d="m 1835,709 51,140 h 6 v -2 l -51,-140 h -6 z"
+       id="path6"
+       sodipodi:nodetypes="ccccccc" />
+    <rect
+       style="display:inline;fill:#6cd985;fill-opacity:1;stroke-width:0.999999"
+       id="rect6-1-7"
+       width="6"
+       height="33"
+       x="1886"
+       y="760" />
+    <rect
+       style="display:inline;fill:#6cd985;fill-opacity:1;stroke-width:0.999999"
+       id="rect6-1"
+       width="6"
+       height="33"
+       x="1886"
+       y="816" />
+    <rect
+       style="display:inline;fill:#f27992;fill-opacity:1;stroke-width:1"
+       id="rect6"
+       width="6"
+       height="114"
+       x="1833.0001"
+       y="735" />
+  </g>
+</svg>

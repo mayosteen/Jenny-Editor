@@ -5,6 +5,7 @@ from core.shasav import Monzo, Harmononym, Val
 from core.image import UI
 from core.events import event_bus
 from core.window import Window
+from core.curves import io_circ
 
 class Animation(Window):
     def __init__(self):
@@ -47,7 +48,7 @@ class Animation(Window):
                     if a0["start"] <= self.beat <= a1["start"]:
                         p0 = a0["position"]
                         p1 = a1["position"]
-                        offset = (self.beat-a0["start"])/(a1["start"]-a0["start"])
+                        offset = io_circ((self.beat-a0["start"])/(a1["start"]-a0["start"]))
                         r.center = (
                             self.rect.w//2+( p0[0]*(1-offset) + p1[0]*offset ),
                             self.rect.h//2-( p0[1]*(1-offset) + p1[1]*offset ))
@@ -60,7 +61,9 @@ class Animation(Window):
         screen.blit(self.surface, self.rect)
     
     def update(self):
-        self.beat = song.get_beat()
+        beat = song.get_beat()
+        print(beat - self.beat)
+        self.beat = beat
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法

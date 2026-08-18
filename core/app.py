@@ -58,4 +58,4 @@ class MayOS:
             self.wm.draw(self.screen)
             self.wm.update()
             pygame.display.flip()
-            self.clock.tick(60)
+            # self.clock.tick(60)

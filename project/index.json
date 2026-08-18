@@ -16,47 +16,93 @@
     ],
     "sprites":[
         {
-            "image":"title.png",
+            "id":0,
+            "type":"text",
+            "content":"微分音圈2027拜年纪",
+            "size":100,
+            "color":[255, 205, 72],
             "position":[0, 720],
             "animation":[
                 {"start":0.00, "position":[0, 720]},
                 {"start":4.00, "position":[0, 0]},
                 {"start":16.00, "position":[0, 0]},
                 {"start":20.00, "position":[0, 720]},
-                {"start":114514, "position":[0, 720]}
+                {"start":11451, "position":[0, 720]}
             ]
         },
         {
-            "image":"title_en.png",
+            "id":1,
+            "type":"text",
+            "content":"Xen Neo 2027",
+            "size":150,
+            "color":[255, 205, 72],
             "position":[0, -720],
             "animation":[
                 {"start":16.00, "position":[0, -720]},
                 {"start":20.00, "position":[0, 0]},
                 {"start":32.00, "position":[0, 0]},
                 {"start":36.00, "position":[0, 720]},
-                {"start":114514, "position":[0, 720]}
+                {"start":11451, "position":[0, 720]}
             ]
         },
         {
-            "image":"submit.png",
-            "position":[0, -720],
-            "animation":[
-                {"start":32.00, "position":[0, -720]},
-                {"start":36.00, "position":[0, 0]},
-                {"start":48.00, "position":[0, 0]},
-                {"start":52.00, "position":[0, 720]},
-                {"start":114514, "position":[0, 720]}
-            ]
-        },
-        {
-            "image":"date.png",
+            "id":2,
+            "type":"text",
+            "content":"征稿+Q1028941937",
+            "size":100,
+            "color":[255, 205, 72],
             "position":[0, -720],
             "animation":[
                 {"start":48.00, "position":[0, -720]},
                 {"start":52.00, "position":[0, 0]},
                 {"start":64.00, "position":[0, 0]},
-                {"start":66.00, "position":[0, 720]},
-                {"start":114514, "position":[0, 720]}
+                {"start":68.00, "position":[0, 720]},
+                {"start":11451, "position":[0, 720]}
+            ]
+        },
+        {
+            "id":3,
+            "type":"text",
+            "content":"截稿日期：2027-01-02",
+            "size":80,
+            "color":[255, 205, 72],
+            "position":[0, -620],
+            "animation":[
+                {"start":48.00, "position":[0, -620]},
+                {"start":52.00, "position":[0, 100]},
+                {"start":64.00, "position":[0, 100]},
+                {"start":68.00, "position":[0, 820]},
+                {"start":11451, "position":[0, 820]}
+            ]
+        },
+        {
+            "id":4,
+            "type":"text",
+            "content":"直播日期：2027-02-07",
+            "size":80,
+            "color":[255, 205, 72],
+            "position":[0, -720],
+            "animation":[
+                {"start":48.00, "position":[0, -720]},
+                {"start":52.00, "position":[0, 0]},
+                {"start":64.00, "position":[0, 0]},
+                {"start":68.00, "position":[0, 720]},
+                {"start":11451, "position":[0, 720]}
+            ]
+        },
+        {
+            "id":5,
+            "type":"text",
+            "content":"直播日期：2027-02-07",
+            "size":80,
+            "color":[255, 205, 72],
+            "position":[0, -820],
+            "animation":[
+                {"start":48.00, "position":[0, -820]},
+                {"start":52.00, "position":[0, -100]},
+                {"start":64.00, "position":[0, -100]},
+                {"start":68.00, "position":[0, 620]},
+                {"start":11451, "position":[0, 620]}
             ]
         }
     ]

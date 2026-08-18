@@ -1,20 +1,32 @@
-import pygame, subprocess
+import pygame, subprocess, sys
+from core.events import event_bus
 
-frame = 0
-screen = pygame.Surface((1920, 1080))
+class Recorder:
+    def __init__(self):
 
-def start(canvas):
-    global screen, frame
-    screen = canvas
-    frame = 1
+        self.frame = 0
+        self.is_recording = False
+        self.surface = pygame.Surface((1920, 1080))
 
-def update():
-    global frame
-    if frame:
-        pygame.image.save(screen, f"recordings/{frame:06d}.png")
-        frame += 1
+        event_bus.subscribe("record_start", self.start)
+        event_bus.subscribe("record_update", self.update)
+        event_bus.subscribe("record_stop", self.stop)
 
-def stop():
-    global frame
-    frame = 0
-    subprocess.Popen("python apps/merge.py")
+    def start(self, surface:pygame.Surface):
+        self.surface = surface
+        self.is_recording = True
+        self.frame = 0
+
+    def update(self, _):
+        if self.is_recording:
+            pygame.image.save(self.surface, f"cache/frame_{self.frame:06d}.png")
+            self.frame += 1
+
+    def stop(self, music):
+        self.is_recording = False
+        self.frame = 0
+        proc = subprocess.Popen(
+            [sys.executable, 'core/merge.py', f'project/{music}']
+        )
+
+recorder = Recorder()

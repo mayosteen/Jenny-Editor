@@ -12,7 +12,7 @@ class EventBus:
             self.listeners[event_type].remove(listener)
 
     def emit(self, event_type, event=None):
-        print(f"{event_type}: {event}")
+        # print(f"{event_type}: {event}")
         if event_type in self.listeners:
             for listener in self.listeners[event_type]:
                 listener(event)

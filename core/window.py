@@ -17,6 +17,9 @@ class Window:
         pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
         pygame.draw.rect(self.surface, (180, 179, 193), (0, self.rect.h-1, self.rect.w, 1))
         screen.blit(self.surface, self.rect)
+
+    def blit(self, paper):
+        self.surface.blit(paper.surface, paper.rect)
     
     def update(self):
         # 子类重写方法

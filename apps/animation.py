@@ -1,15 +1,14 @@
 # core/subtitle.py
-from itertools import combinations
 from core.template import *
-from core.shasav import Monzo, Harmononym, Val
-from core.image import UI
 from core.events import event_bus
 from core.window import Window
 from core.curves import io_circle
+from core.config import V_WIDTH, V_HEIGHT
+from apps.caftaphata_right import CaftR
 
 class Animation(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 0, 1920, 1080))
+        super().__init__("subtitle", pygame.Rect(0, 0, V_WIDTH, V_HEIGHT))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"
@@ -17,6 +16,7 @@ class Animation(Window):
         self.speed = 80
         self.x = 0
         self.y = 0
+        self.caftr = CaftR()
     
     def render_subtitle(self):
         foreground = self.font.render(self.showing, True, (255, 255, 255))
@@ -48,15 +48,13 @@ class Animation(Window):
             self.blit(sprite)
 
 
-
+        self.caftr.draw(self.surface)
         # self.render_subtitle()
         screen.blit(self.surface, self.rect)
     
     def update(self):
         event_bus.emit("record_update")
-        beat = song.get_beat()
-        # print(beat - self.beat)
-        self.beat = beat
+        self.caftr.beat = self.beat = song.get_beat()
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法

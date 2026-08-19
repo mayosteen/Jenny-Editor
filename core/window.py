@@ -6,7 +6,7 @@ from core.events import event_bus
 class Window:
     def __init__(self, title:str, rect:pygame.Rect):
         self.title = title
-        self.surface = pygame.Surface(rect.size)
+        self.surface = pygame.Surface(rect.size, flags=SRCALPHA)
         self.rect = rect
     
     def draw(self, screen:pygame.Surface):

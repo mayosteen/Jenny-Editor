@@ -1,16 +1,20 @@
 from core.template import *
 from core.events import event_bus
 from core.wm import WM
+from core.config import *
 
 class MayOS:
     def __init__(self):
         pygame.init()
-        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (40, 40)
-        self.screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME | pygame.DOUBLEBUF)
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (0, 0)
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.NOFRAME | pygame.DOUBLEBUF)
         self.clock = pygame.time.Clock()
         self.running = True
         self.wm = WM()
         event_bus.subscribe("request_open", self.open)
+        event_bus.emit("request_open", "terminal")
+        event_bus.emit("request_open", "chords")
+        event_bus.emit("request_open", "subtitle")
         event_bus.emit("request_open", "animation")
             
     

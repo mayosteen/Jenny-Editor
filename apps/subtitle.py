@@ -5,7 +5,7 @@ from core.window import Window
 
 class Subtitle(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 1240, 2560, 200))
+        super().__init__("subtitle", pygame.Rect(1280, 1080, 1280, 360))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 120)
         self.showing = "歌词"

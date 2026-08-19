@@ -6,7 +6,7 @@ from core.window import Window
 
 class Terminal(Window):
     def __init__(self):
-        super().__init__("terminal", pygame.Rect(0, 0, 2560, 1440))
+        super().__init__("terminal", pygame.Rect(1920, 0, 640, 1080))
 
         self.font = pygame.font.Font("assets/fonts/svgafix.fon", 12)
         self.path = r"M:\MayOS\>"

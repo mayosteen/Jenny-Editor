@@ -8,7 +8,7 @@ from core.window import Window
 
 class Chords(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 0, 2560, 1240))
+        super().__init__("chords", pygame.Rect(0, 1080, 1280, 360))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"

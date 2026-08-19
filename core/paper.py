@@ -73,7 +73,7 @@ class Text(Paper):
     def render(self):
         self.surface = self.font.render(self.text, True, self.color)
         self.rect = self.surface.get_rect()
-        self.rect.center = self._pos
+        self.rect.center = trans(self._pos)
         
     @property
     def text(self): return self._text
@@ -87,7 +87,7 @@ class Text(Paper):
     # @pos.setter
     # def pos(self, pos):
     #     self._pos = pos
-    #     self.rect.center = self._pos
+    #     self.rect.center = trans(self._pos)
 
     @property
     def color(self): return self._color

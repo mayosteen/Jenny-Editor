@@ -1,5 +1,8 @@
 import pygame
+from pygame.locals import *  # type:ignore
 from core.config import V_WIDTH, V_HEIGHT
+from core.shasav import Monzo
+from core.color import COLOR
 
 pygame.font.init()
 
@@ -95,6 +98,50 @@ class Text(Paper):
     def color(self, color):
         self._color = color
         self.render()
+
+
+qoz = pygame.font.Font("assets/fonts/Qoz.ttf", 35)
+
+class Interval(Paper):
+    def __init__(self, monzo:Monzo, pos, alpha=1, first=False, ah=False):
+        self.chars = []
+        self.x = 0
+        self.y = 0
+        if first:
+            self.add_words(",", COLOR["1D"])
+        # print(monzo)
+        for p,v in zip(range(1, 17), monzo.vec):
+            if 2 <= p <= 6:
+                c = COLOR[f"{p}D"]
+                if v > 0:
+                    self.add_words(str(p) + "+" * abs(v), c)
+                if v < 0:
+                    self.add_words(str(p) + "-" * abs(v), c)
+        if len(self.chars) == 1 and first:
+            self.chars = []
+            self.x = 0
+            self.add_words("!", COLOR["1D"])
+        elif len(self.chars) == 0 and ah:
+            self.add_words("<", COLOR["1D"])
+        elif len(self.chars) == 0 and not ah:
+            self.add_words("1", COLOR["1D"])
+        self.surface = pygame.Surface((self.x, self.y), flags=SRCALPHA)
+        for i in self.chars:
+            self.surface.blit(i[0], i[1])
+
+        self.surface.set_alpha(min(int(alpha * 256), 255))
+        self.rect = self.surface.get_rect()
+        self._pos = pos
+        self.rect.center = self._pos  # 不用trans因为caftr没有用trans逆向
+        # print(self.rect)
+
+    def add_words(self, string, color):
+        char = qoz.render(string, True, color)
+        self.chars.append([char, (self.x, 0)])
+        self.x += char.get_width()
+        self.y = max(self.y, char.get_height())
+
+
 
 def load_paper(pinfos):
     papers = {}

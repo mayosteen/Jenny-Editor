@@ -5,7 +5,8 @@ from core.window import Window
 
 class Subtitle(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(1280, 1080, 1280, 360))
+        # super().__init__("subtitle", pygame.Rect(1280, 1080, 1280, 360))
+        super().__init__("chords", pygame.Rect(0, 840, 1800, 240))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 120)
         self.showing = "歌词"
@@ -52,9 +53,21 @@ class Subtitle(Window):
         if event.unicode == "z":
             song.play()
         if event.unicode == "x":
-            song.pause()
+            song.forward(-1.0)
         if event.unicode == "c":
-            song.resume()
+            if song.playing:
+                if song.paused:
+                    song.resume()
+                else:
+                    song.pause()
+            else:
+                song.play()
+        if event.unicode == "v":
+            song.forward(5.0)
+        if event.unicode == "a":
+            event_bus.emit("record_start", self.surface)
+        if event.unicode == "s":
+            event_bus.emit("record_stop", song.music)
 
     def on_key_up(self, event:pygame.event.Event):
         # 子类重写方法

@@ -15,4 +15,5 @@ UI = {
     "4D_96":pygame.image.load("assets/sprites/96/4.png"),
     "5D_96":pygame.image.load("assets/sprites/96/5.png"),
     "6D_96":pygame.image.load("assets/sprites/96/6.png"),
+    "bar_caftaphata":pygame.image.load("assets/sprites/bar_caftaphata.png"),
 }

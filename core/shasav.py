@@ -33,19 +33,31 @@ tokenscores = {
     # 3D
     "Ly":   Fraction(5, 4),
     "Su":   Fraction(4, 5),
+    "Dry":  Fraction(25, 16),
+    "Sru":  Fraction(16, 25),
     "li":   Fraction(5, 4),
     "s":    Fraction(4, 5),
+    "dri":  Fraction(25, 16),
+    "sr":   Fraction(16, 25),
     # 4D
     "My":   Fraction(7, 4),
     "Pu":   Fraction(4, 7),
+    "Mry":  Fraction(49, 16),
+    "Pru":  Fraction(16, 49),
     "mi":   Fraction(7, 4),
     "p":    Fraction(4, 7),
+    "mry":  Fraction(49, 16),
+    "pr":   Fraction(16, 49),
     # 5D
     "Zy":   Fraction(11, 4),
     "Tschu":Fraction(4, 11),
     "Ku":   Fraction(4, 11),
+    "Zry":  Fraction(121, 16),
+    "Kru":  Fraction(16, 121),
     "zi":   Fraction(11, 4),
     "k":    Fraction(4, 11),
+    "zri":  Fraction(121, 16),
+    "kr":   Fraction(16, 121),
 }
 
 # 按长度降序，保证最长匹配优先
@@ -55,9 +67,9 @@ tokens = [
     "Ah",
     "+",    "-",
     "Chy",  "Scy",  "Xcy",  "Fu",   "Schu", "Ju",
-    "Ly",   "Su",   "li",   "s",
-    "My",   "Pu",   "mi",   "p",
-    "Zy",   "Ku",   "zi",   "k",
+    "Ly",   "Su",   "Dry",  "Sru",  "li",   "s",    "dri",  "sr",
+    "My",   "Pu",   "Mry",  "Pru",  "mi",   "p",    "mri",  "pr",
+    "Zy",   "Ku",   "Zry",  "Kru",  "zi",   "k",    "zri",  "kr",   "Tschu",
     "ta",   "cra",  "na",   "vra"
 ]
 
@@ -66,9 +78,9 @@ SORTED_TOKENS = sorted(tokens, key=len, reverse=True)
 dimens = [
     {0:"Ah"},
     {-3:"Ju", -2:"Schu", -1:"Fu", +1:"Chy", +2:"Scy", +3:"Xcy",},
-                        {-1:"Su", +1:"Ly",},
-                        {-1:"Pu", +1:"My",},
-                        {-1:"Ku", +1:"Zy",},
+              {-2:"Sru", -1:"Su", +1:"Ly", +2:"Dry",},
+              {-2:"Pru", -1:"Pu", +1:"My", +2:"Mry",},
+              {-2:"Kru", -1:"Ku", +1:"Zy", +2:"Zry",},
 ]
 
 # endregion

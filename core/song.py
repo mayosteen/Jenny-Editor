@@ -65,6 +65,18 @@ class Song:
         self.playing = self.paused = False
         self._elapsed = 0.0
 
+    def seek(self, offset:float=0.0):
+        self.stop()
+        pygame.mixer.music.play()
+        pygame.mixer.music.set_pos(offset)
+        self._elapsed = offset
+        self._start = time.perf_counter()
+        self.playing = True
+        self.paused = False
+
+    def forward(self, offset:float=5.0):
+        self.seek(self.get_play_time()+offset)
+
     # ---------- 时间 ----------
     def get_play_time(self) -> float:
         """音频已播放秒数（不含 offset）"""
@@ -72,7 +84,9 @@ class Song:
             return recorder.frame / 60
         elif not self.playing:
             return 0.0
-        return pygame.mixer.music.get_pos() / 1000
+        elif self.paused:
+            return self._elapsed
+        return (time.perf_counter() - self._start) + self._elapsed
             
 
     def get_beat(self):

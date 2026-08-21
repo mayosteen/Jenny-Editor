@@ -1,139 +1,106 @@
 {
     "name":"五月天 - 后来的我们",
-    "music":"中国人民解放军军乐团 - 春节序曲.mp3",
-    "bpm":147.5,
-    "offset":2.26,
+    "music":"五月天 - 后来的我们.mp3",
+    "bpm":78,
+    "offset":0.80,
     "tuning":"72",
     "tonic":0,
     "chords":[
-        {"start":0.00,  "shasaf":"AhChyLy", "tag":"Ahta"},
-        {"start":4.00,  "shasaf":"AhChyLyChyli", "tag":"G"},
-        {"start":8.00,  "shasaf":"AhChyChys", "tag":"Em"},
-        {"start":12.00,  "shasaf":"AhChyLyMy", "tag":"Am"},
-        {"start":16.00,  "shasaf":"AhChyScyLyChyliZy", "tag":"Dm"},
-        {"start":20.00, "shasaf":"AhChyScyLyMyZy", "tag":"Gsus"},
-        {"start":24.00, "shasaf":"AhChyFuzi", "tag":"G"}
+        {"start":0.00,   "shasaf":"FuAhFuli", "tag":"F", "first":1},
+        {"start":2.00,   "shasaf":"ChyScyChyli", "tag":"G", "first":0},
+        {"start":4.00,   "shasaf":"LyChyChyli", "tag":"Em", "first":0},
+        {"start":6.00,   "shasaf":"FuliAhLy", "tag":"Am", "first":0},
+        {"start":8.00,   "shasaf":"SchuliFuFuli", "tag":"Dm", "first":0},
+        {"start":12.00,  "shasaf":"ChyAhScy", "tag":"Gsus", "first":0},
+        {"start":16.00,  "shasaf":"ChyScyChyli", "tag":"G", "first":0},
+
+        {"start":20.00,  "shasaf":"AhChyLy", "tag":"C", "first":1},
+        {"start":24.00,  "shasaf":"LyDryChyliSchuli", "tag":"E7", "first":0},
+        {"start":28.00,  "shasaf":"FuliAhLy", "tag":"Am", "first":0},
+        {"start":32.00,  "shasaf":"FuAhSu", "tag":"Fm", "first":0},
+        {"start":36.00,  "shasaf":"LyChyChyli", "tag":"Em", "first":0},
+        {"start":38.00,  "shasaf":"FuliAhLy", "tag":"Am", "first":0},
+        {"start":40.00,  "shasaf":"SchuliFuFuliAh", "tag":"Dm7", "first":0},
+        {"start":44.00,  "shasaf":"SchuliFuFuliAhChy", "tag":"Dm9", "first":0},
+        {"start":46.00,  "shasaf":"ScyChyChyli", "tag":"G/D", "first":0},
+
+        {"start":48.00,  "shasaf":"AhChyLyChyli", "tag":"CM7", "first":1},
+        {"start":52.00,  "shasaf":"LyDryChyliSchuli", "tag":"E7", "first":0},
+        {"start":56.00,  "shasaf":"FuliAhLy", "tag":"Am", "first":0},
+        {"start":60.00,  "shasaf":"FuAhSu", "tag":"Fm", "first":0},
+        {"start":64.00,  "shasaf":"LyChyChyli", "tag":"Em", "first":0},
+        {"start":66.00,  "shasaf":"FuliAhLy", "tag":"Am", "first":0},
+        {"start":68.00,  "shasaf":"SchuliFuFuliAh", "tag":"Dm7", "first":0},
+        {"start":70.00,  "shasaf":"ChyScyChyliFu", "tag":"G7", "first":0},
+        {"start":72.00,  "shasaf":"AhChyLy", "tag":"C", "first":0}
     ],
-    "sprites":[
-        {
-            "id":0,
-            "type":"text",
-            "content":"微分音圈2027拜年纪",
-            "size":100,
-            "color":[255, 205, 72],
-            "position":[0, 720],
-            "animation":[
-                {"start":0.00, "position":[0, 720]},
-                {"start":4.00, "position":[0, 0]},
-                {"start":16.00, "position":[0, 0]},
-                {"start":20.00, "position":[0, 720]},
-                {"start":11451, "position":[0, 720]}
-            ]
-        },
-        {
-            "id":1,
-            "type":"text",
-            "content":"Xen Neo 2027",
-            "size":150,
-            "color":[255, 205, 72],
-            "position":[0, -720],
-            "animation":[
-                {"start":16.00, "position":[0, -720]},
-                {"start":20.00, "position":[0, 0]},
-                {"start":32.00, "position":[0, 0]},
-                {"start":36.00, "position":[0, 720]},
-                {"start":11451, "position":[0, 720]}
-            ]
-        },
-        {
-            "id":2,
-            "type":"text",
-            "content":"特来向你征稿！",
-            "size":100,
-            "color":[255, 205, 72],
-            "position":[0, -600],
-            "animation":[
-                {"start":32.00, "position":[0, -600]},
-                {"start":36.00, "position":[0, 120]},
-                {"start":48.00, "position":[0, 120]},
-                {"start":52.00, "position":[0, 840]},
-                {"start":11451, "position":[0, 840]}
-            ]
-        },
-        {
-            "id":3,
-            "type":"text",
-            "content":"投稿方式：加QQ群",
-            "size":100,
-            "color":[255, 205, 72],
-            "position":[0, -720],
-            "animation":[
-                {"start":32.00, "position":[0, -720]},
-                {"start":36.00, "position":[0, 0]},
-                {"start":48.00, "position":[0, 0]},
-                {"start":52.00, "position":[0, 720]},
-                {"start":11451, "position":[0, 720]}
-            ]
-        },
-        {
-            "id":4,
-            "type":"text",
-            "content":"1028941937",
-            "size":100,
-            "color":[255, 205, 72],
-            "position":[0, -840],
-            "animation":[
-                {"start":32.00, "position":[0, -840]},
-                {"start":36.00, "position":[0, -120]},
-                {"start":48.00, "position":[0, -120]},
-                {"start":52.00, "position":[0, 600]},
-                {"start":11451, "position":[0, 600]}
-            ]
-        },
-        {
-            "id":5,
-            "type":"text",
-            "content":"截稿日期：2027-01-02",
-            "size":80,
-            "color":[255, 205, 72],
-            "position":[0, -620],
-            "animation":[
-                {"start":48.00, "position":[0, -620]},
-                {"start":52.00, "position":[0, 100]},
-                {"start":64.00, "position":[0, 100]},
-                {"start":68.00, "position":[0, 820]},
-                {"start":11451, "position":[0, 820]}
-            ]
-        },
-        {
-            "id":6,
-            "type":"text",
-            "content":"直播日期：2027-02-07",
-            "size":80,
-            "color":[255, 205, 72],
-            "position":[0, -720],
-            "animation":[
-                {"start":48.00, "position":[0, -720]},
-                {"start":52.00, "position":[0, 0]},
-                {"start":64.00, "position":[0, 0]},
-                {"start":68.00, "position":[0, 720]},
-                {"start":11451, "position":[0, 720]}
-            ]
-        },
-        {
-            "id":7,
-            "type":"text",
-            "content":"（正月初二）",
-            "size":80,
-            "color":[255, 205, 72],
-            "position":[0, -820],
-            "animation":[
-                {"start":48.00, "position":[0, -820]},
-                {"start":52.00, "position":[0, -100]},
-                {"start":64.00, "position":[0, -100]},
-                {"start":68.00, "position":[0, 620]},
-                {"start":11451, "position":[0, 620]}
-            ]
-        }
+    "subtitles":[
+        {"start":0.00, "text":""},
+        {"start":19.50, "text":"然后呢"},
+        {"start":23.75, "text":"他们说你的心似乎痊愈了"},
+        {"start":31.75, "text":"也开始有个人为你守护着"},
+        {"start":39.75, "text": "我该心安或是心痛呢"},
+        {"start":47.50, "text": "然后呢"},
+        {"start":51.75, "text": "其实我的日子也还可以呢"},
+        {"start":59.75, "text": "除了回忆肆虐的某些时刻"},
+        {"start":67.75, "text": "庆幸还有眼泪冲淡苦涩"},
+        {"start":75, "text": ""},
+        {"start":77.75, "text": "而那些昨日依然缤纷着"},
+        {"start":85.75, "text": "它们都有我细心收藏着"},
+        {"start":93.75, "text": "也许你还记得"},
+        {"start":97.75, "text": "也许你都忘了"},
+        {"start":101.75, "text": "也不是那么"},
+        {"start":107.50, "text": "重要了"},
+
+        {"start":109.50, "text": "只期待后来的你能快乐"},
+        {"start":118.50, "text": "那就是后来的我最想的"},
+        {"start":126.50, "text": "后来的我们依然走着"},
+        {"start":131.75, "text": "只是不再并肩了"},
+        {"start":135.75, "text": "朝各自的人生追寻了"},
+        {"start":141.50, "text": "无论是后来故事怎么了"},
+        {"start":150.50, "text": "也要让后来人生精彩着"},
+        {"start":158.50, "text": "后来的我们我期待着"},
+        {"start":163.50, "text": "泪水中能看到"},
+        {"start":171.50, "text": "你真的"},
+        {"start":174.50, "text": "自由了"},
+        {"start":178.00, "text": ""},
+
+        {"start":191.50, "text": "亲爱的"},
+        {"start":195.75, "text": "回忆我们共同走过的曲折"},
+        {"start":203.75, "text": "是那些带我们来到了这一刻"},
+        {"start":211.75, "text": "让珍贵的人生有失有得"},
+        {"start":219.00, "text": ""},
+        {"start":221.75, "text": "用新的幸福把遗憾包着"},
+        {"start":229.75, "text": "就这么朝着未来前进了"},
+        {"start":237.75, "text": "有再多的不舍"},
+        {"start":241.75, "text": "也要狠心割舍"},
+        {"start":245.75, "text": "别回头看我"},
+        {"start":251.50, "text": "亲爱的"},
+
+        {"start":253.50, "text": "只期待后来的你能快乐"},
+        {"start":262.50, "text": "那就是后来的我最想的"},
+        {"start":270.50, "text": "后来的我们依然走着"},
+        {"start":275.75, "text": "只是不再并肩了"},
+        {"start":279.75, "text": "朝各自的人生追寻了"},
+        {"start":285.50, "text": "无论是后来故事怎么了"},
+        {"start":294.75, "text": "也要让后来人生精彩着"},
+        {"start":302.50, "text": "后来的我们我期待着"},
+        {"start":707.50, "text": "泪水中能看到"},
+        {"start":315.50, "text": "你真的"},
+        {"start":317.50, "text": "幸福快乐"},
+        {"start":326.00, "text": ""},
+
+        {"start":349.50, "text": "在某处另一个你留下了"},
+        {"start":358.50, "text": "在那里另一个我微笑着"},
+        {"start":366.50, "text": "另一个我们还深爱着"},
+        {"start":371.75, "text": "代替我们永恒着"},
+        {"start":375.75, "text": "如果能这么想就够了"},
+        {"start":381.50, "text": "无论是后来故事怎么了"},
+        {"start":390.50, "text": "也要让后来人生值得"},
+        {"start":398.50, "text": "后来的我们我期待着"},
+        {"start":403.50, "text": "泪水中能看到"},
+        {"start":411.50, "text": "你真的"},
+        {"start":416.75, "text": "自由了"},
+        {"start":421.50, "text": ""}
     ]
 }

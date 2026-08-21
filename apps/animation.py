@@ -8,7 +8,7 @@ from apps.caftaphata_right import CaftR
 
 class Animation(Window):
     def __init__(self):
-        super().__init__("subtitle", pygame.Rect(0, 0, V_WIDTH, V_HEIGHT))
+        super().__init__("animation", pygame.Rect(0, 0, V_WIDTH, V_HEIGHT))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"
@@ -26,16 +26,15 @@ class Animation(Window):
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
-        self.surface.fill((139, 28, 27))
+        # self.surface.fill((139, 28, 27))
+        self.surface.fill((30, 72, 109))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, self.rect.h-1, self.rect.w, 1))
-        bar = pygame.Surface((self.rect.w, 2), flags=SRCALPHA)
-        bar.fill((224, 133, 152, 77))
         for id, sprite in song.sprites.items():
             if self.beat <= sprite.anim[0]["start"]:
-                pass
+                sprite.pos = sprite.anim[0]["position"]
             else:
                 for p in range(len(sprite.anim)-1):
                     a0 = sprite.anim[p]
@@ -72,9 +71,17 @@ class Animation(Window):
         if event.unicode == "z":
             song.play()
         if event.unicode == "x":
-            song.pause()
+            song.forward(-1.0)
         if event.unicode == "c":
-            song.resume()
+            if song.playing:
+                if song.paused:
+                    song.resume()
+                else:
+                    song.pause()
+            else:
+                song.play()
+        if event.unicode == "v":
+            song.forward(5.0)
         if event.unicode == "a":
             event_bus.emit("record_start", self.surface)
         if event.unicode == "s":

@@ -8,7 +8,8 @@ from core.window import Window
 
 class Chords(Window):
     def __init__(self):
-        super().__init__("chords", pygame.Rect(0, 1080, 1280, 360))
+        # super().__init__("chords", pygame.Rect(0, 1080, 1280, 360))
+        super().__init__("chords", pygame.Rect(0, 0, 1800, 840))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"
@@ -25,7 +26,8 @@ class Chords(Window):
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
-        self.surface.fill((103, 102, 129))
+        # self.surface.fill((103, 102, 129))
+        self.surface.fill((25, 62, 93))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))
@@ -76,9 +78,21 @@ class Chords(Window):
         if event.unicode == "z":
             song.play()
         if event.unicode == "x":
-            song.pause()
+            song.forward(-1.0)
         if event.unicode == "c":
-            song.resume()
+            if song.playing:
+                if song.paused:
+                    song.resume()
+                else:
+                    song.pause()
+            else:
+                song.play()
+        if event.unicode == "v":
+            song.forward(5.0)
+        if event.unicode == "a":
+            event_bus.emit("record_start", self.surface)
+        if event.unicode == "s":
+            event_bus.emit("record_stop", song.music)
 
     def on_key_up(self, event:pygame.event.Event):
         # 子类重写方法

@@ -13,9 +13,9 @@ class MayOS:
         self.wm = WM()
         event_bus.subscribe("request_open", self.open)
         event_bus.emit("request_open", "terminal")
+        event_bus.emit("request_open", "animation")
         event_bus.emit("request_open", "chords")
         event_bus.emit("request_open", "subtitle")
-        event_bus.emit("request_open", "animation")
             
     
     def open(self, app:str):

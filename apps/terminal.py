@@ -1,8 +1,9 @@
 # core/terminal.py
 import time
 from core.template import *
-from core.events import event_bus
 from core.window import Window
+from core.events import event_bus
+from core.am import am
 
 class Terminal(Window):
     def __init__(self):
@@ -101,4 +102,5 @@ class Terminal(Window):
                     event_bus.emit("request_window_list")
             else:
                 self.print("Invalid command.")
-            
+
+am.register("terminal", Terminal)

@@ -1,28 +1,25 @@
 # core/subtitle.py
 from core.template import *
-from core.events import event_bus
 from core.window import Window
 from core.curves import io_circle
 from core.config import V_WIDTH, V_HEIGHT
-from apps.caftaphata_right import CaftR
+from core.events import event_bus
+from core.am import am
 
 class Animation(Window):
     def __init__(self):
         super().__init__("animation", pygame.Rect(0, 0, V_WIDTH, V_HEIGHT))
 
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
-        self.showing = "Chords"
         self.beat = 0
         self.speed = 80
         self.x = 0
         self.y = 0
-        self.caftr = CaftR()
-    
-    def render_subtitle(self):
-        foreground = self.font.render(self.showing, True, (255, 255, 255))
-        f_rect = foreground.get_rect()
-        f_rect.center = (self.rect.w//2, self.rect.h//2)
-        self.surface.blit(foreground, f_rect)
+        self.windows = [
+            am.get("chords")(),
+            am.get("subtitle")(),
+            am.get("caftr")(),
+            ]
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
@@ -46,14 +43,16 @@ class Animation(Window):
                             
             self.blit(sprite)
 
-
-        self.caftr.draw(self.surface)
+        for window in self.windows:
+            window.draw(self.surface)
         # self.render_subtitle()
         screen.blit(self.surface, self.rect)
     
     def update(self):
         event_bus.emit("record_update")
-        self.caftr.beat = self.beat = song.get_beat()
+        self.beat = song.get_beat()
+        for window in self.windows:
+            window.update()
 
     def on_mouse_down(self, pos:tuple[int, int]):
         # 子类重写方法
@@ -91,4 +90,5 @@ class Animation(Window):
         # 子类重写方法
         print(f"animation.on_key_up: {event}")
         pass
-            
+
+am.register("animation", Animation)

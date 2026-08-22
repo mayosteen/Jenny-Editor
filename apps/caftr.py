@@ -6,6 +6,7 @@ from core.paper import Interval
 from core.image import UI
 from core.events import event_bus
 from core.window import Window
+from core.am import am
 
 class CaftR(Window):
     def __init__(self):
@@ -52,6 +53,13 @@ class CaftR(Window):
                         r.x = 0
                         r.centery = bass_y - (ht0+ht1)//2
                         self.surface.blit(p, r)
+                r = UI["bass_96"].get_rect()
+                r.x = 0
+                r.centery = bass_y - (self.val@h0.monzos[0])
+                self.surface.blit(UI["bass_96"], r)
+                
+
+
                 if n == 0 or c0["first"]:
                     self.blit(Interval(h0.monzos[0], (63, 985), alpha=(c0["start"]+self.isb-self.beat)/self.isb, first=True))
                 elif c0["shasaf"].startswith("Ah"):
@@ -70,4 +78,5 @@ class CaftR(Window):
     
     def update(self):
         self.beat = song.get_beat()
-            
+
+am.register("caftr", CaftR)  

@@ -3,8 +3,9 @@ from itertools import combinations
 from core.template import *
 from core.shasav import Monzo, Harmononym, Val
 from core.image import UI
-from core.events import event_bus
 from core.window import Window
+from core.events import event_bus
+from core.am import am
 
 class Chords(Window):
     def __init__(self):
@@ -98,4 +99,5 @@ class Chords(Window):
         # 子类重写方法
         print(f"chords.on_key_up: {event}")
         pass
-            
+
+am.register("chords", Chords)

@@ -1,7 +1,8 @@
 # core/subtitle.py
 from core.template import *
-from core.events import event_bus
 from core.window import Window
+from core.events import event_bus
+from core.am import am
 
 class Subtitle(Window):
     def __init__(self):
@@ -73,4 +74,5 @@ class Subtitle(Window):
         # 子类重写方法
         print(f"subtitle.on_key_up: {event}")
         pass
-            
+
+am.register("subtitle", Subtitle)

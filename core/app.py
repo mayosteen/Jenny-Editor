@@ -2,6 +2,7 @@ from core.template import *
 from core.events import event_bus
 from core.wm import WM
 from core.config import *
+from core.all_app import all_app
 
 class MayOS:
     def __init__(self):
@@ -14,8 +15,8 @@ class MayOS:
         event_bus.subscribe("request_open", self.open)
         event_bus.emit("request_open", "terminal")
         event_bus.emit("request_open", "animation")
-        event_bus.emit("request_open", "chords")
-        event_bus.emit("request_open", "subtitle")
+        # event_bus.emit("request_open", "chords")
+        # event_bus.emit("request_open", "subtitle")
             
     
     def open(self, app:str):

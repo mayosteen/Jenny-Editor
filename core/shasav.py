@@ -108,7 +108,7 @@ def c_d(chordonym: str) -> list[str]:
             i += len(matched)
         else:
             # 无法识别的字符：跳过或报错，视需求二选一
-            raise ValueError(f"无法识别的字符 '{chordonym[i]}' at pos {i}")
+            raise ValueError(f"无法识别的字符 '{chordonym[i]}' at pos {i} in {chordonym}")
     return result
 
 # dimenonyms -> ["Chy", "mi", "k"]
@@ -189,6 +189,17 @@ class Monzo:
     
     def __repr__(self) -> str:
         return "Monzo({})".format(", ".join([str(x) for x in self.vec]))
+
+    def __iter__(self):
+        return self.vec
+    
+    def __eq__(self, other):
+        if not isinstance(other, Monzo):
+            return NotImplemented
+        return((self-other).vec in [[], [0]])
+
+    def __hash__(self):
+        return hash(self.__repr__())
 
     def to_fraction(self) -> Fraction:
         num = 1

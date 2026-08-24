@@ -16,5 +16,8 @@ UI = {
     "5D_96":pygame.image.load("assets/sprites/96/5.png"),
     "6D_96":pygame.image.load("assets/sprites/96/6.png"),
     "bass_96":pygame.image.load("assets/sprites/96/bass.png"),
+    "grid_bass":pygame.image.load("assets/sprites/grid/bass.png"),
+    "grid_bass_white":pygame.image.load("assets/sprites/grid/bass_white.png"),
+    "grid_playing":pygame.image.load("assets/sprites/grid/playing.png"),
     "bar_caftaphata":pygame.image.load("assets/sprites/bar_caftaphata.png"),
 }

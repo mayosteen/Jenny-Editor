@@ -5,7 +5,7 @@ all_app = [
     "subtitle",
     "animation",
     "caftr",
-    "terminal",
+    "grid",
 ]
 for app in all_app:
     importlib.import_module(f"apps.{app}")

@@ -1,6 +1,7 @@
 # core/subtitle.py
 from core.template import *
 from core.window import Window
+from core.color import COLOR
 from core.events import event_bus
 from core.am import am
 
@@ -20,7 +21,7 @@ class Subtitle(Window):
     
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
-        self.surface.fill((0, 0, 0, 0))
+        self.surface.fill(COLOR["bg_subtitle"])
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))

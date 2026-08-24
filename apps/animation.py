@@ -3,6 +3,7 @@ from core.template import *
 from core.window import Window
 from core.curves import io_circle
 from core.config import V_WIDTH, V_HEIGHT
+from core.color import COLOR
 from core.events import event_bus
 from core.am import am
 
@@ -17,6 +18,7 @@ class Animation(Window):
         self.y = 0
         self.windows = [
             am.get("chords")(),
+            am.get("grid")(),
             am.get("subtitle")(),
             am.get("caftr")(),
             ]
@@ -24,7 +26,7 @@ class Animation(Window):
     def draw(self, screen:pygame.Surface):
         # 子类重写方法
         # self.surface.fill((139, 28, 27))
-        self.surface.fill((30, 72, 109))
+        self.surface.fill(COLOR["bg_animation"])
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, 1, self.rect.h))
         # pygame.draw.rect(self.surface, (180, 179, 193), (0, 0, self.rect.w, 1))
         # pygame.draw.rect(self.surface, (180, 179, 193), (self.rect.w-1, 0, 1, self.rect.h))

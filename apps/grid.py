@@ -57,7 +57,7 @@ class Grid(Window):
                 for m in h0.monzos:
                     dim = \
                         "white" if m==w else \
-                        "3D" if len(m.vec) >= 3 else \
+                        "3D" if len((m-w).vec) >= 3 else \
                         "2D"
                     self.draw_block(COLOR[dim], m)
                 self.draw_bass(b, w)

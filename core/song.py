@@ -66,6 +66,8 @@ class Song:
         self._elapsed = 0.0
 
     def seek(self, offset:float=0.0):
+        if offset < 0:
+            offset = 0
         self.stop()
         pygame.mixer.music.play()
         pygame.mixer.music.set_pos(offset)

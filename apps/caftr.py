@@ -15,7 +15,7 @@ class CaftR(Window):
         self.font = pygame.font.Font("assets/fonts/HarmonyOSSansSCRegular.ttf", 20)
         self.showing = "Chords"
         self.beat = 0
-        self.isb = 2  # interval_showing_beat
+        self.isb = 8  # interval_showing_beat
         self.val = Val(96)
         self.tuning = Tuning(96)
     
@@ -59,7 +59,10 @@ class CaftR(Window):
                 self.surface.blit(UI["bass_96"], r)
                 
 
-
+                if n == len(song.chords)-1:
+                    self.isb = 8
+                else:
+                    self.isb = c1["start"] - c0["start"]
                 if n == 0 or c0["first"]:
                     self.blit(Interval(h0.monzos[0], (63, 985), alpha=(c0["start"]+self.isb-self.beat)/self.isb, first=True))
                 elif c0["shasaf"].startswith("Ah"):

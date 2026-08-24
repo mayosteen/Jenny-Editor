@@ -72,7 +72,7 @@ class Animation(Window):
         if event.unicode == "z":
             song.play()
         if event.unicode == "x":
-            song.forward(-1.0)
+            song.forward(-5.0)
         if event.unicode == "c":
             if song.playing:
                 if song.paused:
@@ -83,6 +83,10 @@ class Animation(Window):
                 song.play()
         if event.unicode == "v":
             song.forward(5.0)
+        if event.unicode == "n":
+            song.forward(-60.0)
+        if event.unicode == "m":
+            song.forward(60.0)
         if event.unicode == "a":
             event_bus.emit("record_start", self.surface)
         if event.unicode == "s":

@@ -7,7 +7,7 @@ from core.all_app import all_app
 class MayOS:
     def __init__(self):
         pygame.init()
-        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (0, 0)
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (40, 40)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.NOFRAME | pygame.DOUBLEBUF)
         self.clock = pygame.time.Clock()
         self.running = True
